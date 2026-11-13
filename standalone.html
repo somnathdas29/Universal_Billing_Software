@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayzenMax Universal — Offline-First Universal Billing & GST/VAT Platform</title>
+  <!-- Tailwind CSS CDN for instant zero-dependency standalone execution -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React 18 CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel Standalone for JSX compilation -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- QRCode CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f7f6f2;
+      color: #0f172a;
+    }
+    .font-mono-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    @media print {
+      body * { visibility: hidden !important; }
+      #printable-invoice, #printable-invoice * { visibility: visible !important; }
+      #printable-invoice {
+        position: absolute !important;
+        left: 0 !important; top: 0 !important; width: 100% !important;
+        padding: 24px !important; margin: 0 !important;
+        background: white !important;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#f7f6f2] antialiased">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const INDIAN_STATES = [
+      { code: '01', name: 'Jammu and Kashmir' },
+      { code: '02', name: 'Himachal Pradesh' },
+      { code: '03', name: 'Punjab' },
+      { code: '04', name: 'Chandigarh' },
+      { code: '05', name: 'Uttarakhand' },
+      { code: '06', name: 'Haryana' },
+      { code: '07', name: 'Delhi' },
+      { code: '08', name: 'Rajasthan' },
+      { code: '09', name: 'Uttar Pradesh' },
+      { code: '10', name: 'Bihar' },
+      { code: '19', name: 'West Bengal' },
+      { code: '24', name: 'Gujarat' },
+      { code: '27', name: 'Maharashtra' },
+      { code: '29', name: 'Karnataka' },
+      { code: '33', name: 'Tamil Nadu' },
+      { code: '36', name: 'Telangana' },
+    ];
+
+    const INITIAL_COMPANY = {
+      legalName: 'PAYZENMAX TECHNOLOGIES PRIVATE LIMITED',
+      tradeName: 'PayzenMax Electronics & IT Solutions',
+      taxSystem: 'GST_INDIA',
+      taxNumberLabel: 'GSTIN',
+      taxNumber: '27AAJCV4821M1Z6',
+      state: 'Maharashtra',
+      stateCode: '27',
+      addressLine1: 'Unit 402, Cyber Tower, Hinjewadi Phase 1',
+      addressLine2: 'Near Infotech Circle',
+      city: 'Pune',
+      pincode: '411057',
+      phone: '+91 98230 45678',
+      email: 'billing@payzenmax.com',
+      currency: 'INR',
+      currencySymbol: '₹',
+      invoicePrefix: 'VT/26-27/',
+      nextInvoiceNumber: 1049,
+      financialYear: '2026-27',
+      bankName: 'HDFC Bank Ltd',
+      bankAccount: '50200084729104',
+      bankIfsc: 'HDFC0001248',
+      bankBranch: 'Hinjewadi Pune',
+      upiId: 'payzenmax@hdfcbank',
+      termsAndConditions: '1. Goods once sold will not be taken back without original tax invoice. 2. Interest @ 18% p.a. will be charged if payment is delayed beyond due date. 3. Subject to Pune jurisdiction.',
+    };
+
+    const INITIAL_CUSTOMERS = [
+      { id: 'cust-1', name: 'Shree Ganesh Telecom & Mobiles', taxNumber: '27AALCG5582K1Z9', isRegisteredTaxpayer: true, state: 'Maharashtra', stateCode: '27', phone: '+91 98221 11223', billingAddress: 'Shop 14, Laxmi Road, Pune 411030', balanceDue: 54210 },
+      { id: 'cust-2', name: 'Apex Infotech Solutions LLP', taxNumber: '29ABCDE1234F1Z5', isRegisteredTaxpayer: true, state: 'Karnataka', stateCode: '29', phone: '+91 80 4123 4567', billingAddress: '7th Cross, Indiranagar, Bengaluru 560038', balanceDue: 92300 },
+      { id: 'cust-3', name: 'Rahul K. Sharma (Retail)', isRegisteredTaxpayer: false, state: 'Maharashtra', stateCode: '27', phone: '+91 97654 32100', billingAddress: 'Flat 304, Green Acres, Wakad, Pune 411057', balanceDue: 0 },
+      { id: 'cust-4', name: 'Metro Surveillance & Security Systems', taxNumber: '24AAECM8821Q1Z3', isRegisteredTaxpayer: true, state: 'Gujarat', stateCode: '24', phone: '+91 94260 78910', billingAddress: 'Ring Road Industrial Area, Surat 395002', balanceDue: 84976 }
+    ];
+
+    const INITIAL_PRODUCTS = [
+      { id: 'prod-1', sku: 'HIK-4MP-DOME', name: 'Hikvision 4MP IP Dome Camera DS-2CD1143G0-I', hsnSacCode: '8525', uom: 'PCS', taxRate: 18, purchaseCost: 2600, sellingPrice: 3850, currentStock: 3, reorderPoint: 10 },
+      { id: 'prod-2', sku: 'TPL-ARCHER-C6', name: 'TP-Link Archer C6 Gigabit Dual Band Router', hsnSacCode: '8517', uom: 'PCS', taxRate: 18, purchaseCost: 1950, sellingPrice: 2799, currentStock: 2, reorderPoint: 8 },
+      { id: 'prod-3', sku: 'D-LINK-CAT6-305', name: 'D-Link Cat6 UTP Solid Cable 305M Blue', hsnSacCode: '8544', uom: 'BOX', taxRate: 18, purchaseCost: 6200, sellingPrice: 8400, currentStock: 5, reorderPoint: 12 },
+      { id: 'prod-4', sku: 'DELL-LAT-3440', name: 'Dell Latitude 3440 Core i5 13th Gen 16GB/512GB', hsnSacCode: '8471', uom: 'NOS', taxRate: 18, purchaseCost: 46000, sellingPrice: 52800, currentStock: 4, reorderPoint: 5 }
+    ];
+
+    const INITIAL_INVOICES = [
+      {
+        id: 'inv-1044',
+        invoiceNumber: 'VT/26-27/1044',
+        invoiceDate: '2026-10-05',
+        dueDate: '2026-10-20',
+        customerId: 'cust-1',
+        customerName: 'Shree Ganesh Telecom & Mobiles',
+        customerTaxNumber: '27AALCG5582K1Z9',
+        customerState: 'Maharashtra',
+        customerStateCode: '27',
+        customerAddress: 'Shop 14, Laxmi Road, Pune 411030',
+        placeOfSupply: 'Maharashtra (27)',
+        placeOfSupplyCode: '27',
+        isInterstate: false,
+        reverseCharge: false,
+        items: [
+          { id: 'i1', description: 'Hikvision 4MP IP Dome Camera', hsnSacCode: '8525', quantity: 10, uom: 'PCS', unitPrice: 3850, discountPercent: 0, taxRate: 18, taxableAmount: 38500, cgstRate: 9, cgstAmount: 3465, sgstRate: 9, sgstAmount: 3465, lineTotal: 45430 }
+        ],
+        subtotalTaxable: 38500,
+        cgstTotal: 3465,
+        sgstTotal: 3465,
+        igstTotal: 0,
+        totalTax: 6930,
+        roundOff: 0,
+        grandTotal: 45430,
+        paymentMode: 'UPI',
+        amountReceived: 0,
+        balanceDue: 45430,
+        status: 'UNPAID'
+      },
+      {
+        id: 'inv-1045',
+        invoiceNumber: 'VT/26-27/1045',
+        invoiceDate: '2026-10-12',
+        dueDate: '2026-10-27',
+        customerId: 'cust-2',
+        customerName: 'Apex Infotech Solutions LLP',
+        customerTaxNumber: '29ABCDE1234F1Z5',
+        customerState: 'Karnataka',
+        customerStateCode: '29',
+        customerAddress: '7th Cross, Indiranagar, Bengaluru 560038',
+        placeOfSupply: 'Karnataka (29)',
+        placeOfSupplyCode: '29',
+        isInterstate: true,
+        reverseCharge: false,
+        items: [
+          { id: 'i2', description: 'Dell Latitude 3440 Core i5', hsnSacCode: '8471', quantity: 3, uom: 'NOS', unitPrice: 52800, discountPercent: 2, taxRate: 18, taxableAmount: 155232, igstRate: 18, igstAmount: 27941.76, lineTotal: 183173.76 }
+        ],
+        subtotalTaxable: 155232,
+        cgstTotal: 0,
+        sgstTotal: 0,
+        igstTotal: 27941.76,
+        totalTax: 27941.76,
+        roundOff: 0.24,
+        grandTotal: 183174,
+        paymentMode: 'BANK_TRANSFER',
+        amountReceived: 90874,
+        balanceDue: 92300,
+        status: 'PART_PAID'
+      }
+    ];
+
+    function formatCurrency(amount, symbol = '₹') {
+      if (isNaN(amount) || amount === null || amount === undefined) amount = 0;
+      return `${symbol}${Number(amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function App() {
+      const [view, setView] = useState('dashboard');
+      const [company, setCompany] = useState(() => {
+        const s = localStorage.getItem('payzen_comp');
+        return s ? JSON.parse(s) : INITIAL_COMPANY;
+      });
+      const [customers, setCustomers] = useState(() => {
+        const s = localStorage.getItem('payzen_cust');
+        return s ? JSON.parse(s) : INITIAL_CUSTOMERS;
+      });
+      const [products, setProducts] = useState(() => {
+        const s = localStorage.getItem('payzen_prod');
+        return s ? JSON.parse(s) : INITIAL_PRODUCTS;
+      });
+      const [invoices, setInvoices] = useState(() => {
+        const s = localStorage.getItem('payzen_inv');
+        return s ? JSON.parse(s) : INITIAL_INVOICES;
+      });
+      const [selectedInvoice, setSelectedInvoice] = useState(null);
+
+      useEffect(() => {
+        localStorage.setItem('payzen_comp', JSON.stringify(company));
+      }, [company]);
+      useEffect(() => {
+        localStorage.setItem('payzen_cust', JSON.stringify(customers));
+      }, [customers]);
+      useEffect(() => {
+        localStorage.setItem('payzen_prod', JSON.stringify(products));
+      }, [products]);
+      useEffect(() => {
+        localStorage.setItem('payzen_inv', JSON.stringify(invoices));
+      }, [invoices]);
+
+      const activeInvoices = invoices.filter(i => i.status !== 'CANCELLED');
+      const totalSales = activeInvoices.reduce((sum, i) => sum + i.grandTotal, 0);
+      const totalTaxable = activeInvoices.reduce((sum, i) => sum + i.subtotalTaxable, 0);
+      const totalTax = activeInvoices.reduce((sum, i) => sum + i.totalTax, 0);
+      const totalReceivables = activeInvoices.reduce((sum, i) => sum + i.balanceDue, 0);
+      const lowStockItems = products.filter(p => p.currentStock <= p.reorderPoint);
+
+      return (
+        <div className="flex h-screen overflow-hidden">
+          {/* Sidebar */}
+          <aside className="w-64 bg-white border-r border-slate-200 flex flex-col h-screen select-none shrink-0 no-print">
+            <div className="p-4 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-emerald-800 flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm">
+                  PM
+                </div>
+                <div>
+                  <h1 className="font-bold text-sm tracking-tight text-slate-900">PayzenMax.com</h1>
+                  <p className="text-[11px] text-slate-500">Universal Billing Platform</p>
+                </div>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-slate-100 text-[11px] text-slate-500 space-y-0.5 font-mono">
+                <div>GSTIN: {company.taxNumber}</div>
+                <div>{company.state} ({company.stateCode}) · FY {company.financialYear}</div>
+              </div>
+            </div>
+
+            <div className="p-3">
+              <button
+                onClick={() => setView('new_bill')}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-sm rounded-lg shadow-sm transition"
+              >
+                <span>+ New bill</span>
+                <span className="text-[10px] bg-emerald-950/40 text-emerald-100 px-1.5 py-0.5 rounded font-mono">
+                  Alt+N
+                </span>
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto px-2 space-y-1 text-xs font-medium text-slate-600">
+              <button
+                onClick={() => setView('dashboard')}
+                className={`w-full text-left px-3 py-2 rounded-md transition ${view === 'dashboard' ? 'bg-slate-100 text-slate-900 font-bold' : 'hover:bg-slate-50'}`}
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={() => setView('invoices')}
+                className={`w-full flex justify-between px-3 py-2 rounded-md transition ${view === 'invoices' ? 'bg-slate-100 text-slate-900 font-bold' : 'hover:bg-slate-50'}`}
+              >
+                <span>Invoices</span>
+                <span className="font-mono bg-slate-200 px-1.5 py-0.2 rounded text-[10px]">{invoices.length}</span>
+              </button>
+              <button
+                onClick={() => setView('customers')}
+                className={`w-full text-left px-3 py-2 rounded-md transition ${view === 'customers' ? 'bg-slate-100 text-slate-900 font-bold' : 'hover:bg-slate-50'}`}
+              >
+                Customers
+              </button>
+              <button
+                onClick={() => setView('inventory')}
+                className={`w-full flex justify-between px-3 py-2 rounded-md transition ${view === 'inventory' ? 'bg-slate-100 text-slate-900 font-bold' : 'hover:bg-slate-50'}`}
+              >
+                <span>Items & stock</span>
+                {lowStockItems.length > 0 && (
+                  <span className="font-mono bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-[10px]">{lowStockItems.length} low</span>
+                )}
+              </button>
+              <button
+                onClick={() => setView('gstr1')}
+                className={`w-full text-left px-3 py-2 rounded-md transition ${view === 'gstr1' ? 'bg-slate-100 text-slate-900 font-bold' : 'hover:bg-slate-50'}`}
+              >
+                GSTR-1 Report
+              </button>
+            </div>
+
+            <div className="p-3 border-t border-slate-100 bg-slate-50/60 text-[11px] text-emerald-800 font-medium">
+              ✓ Saved on device · Offline ready
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <main className="flex-1 overflow-y-auto p-8">
+            {view === 'dashboard' && (
+              <div className="space-y-6 max-w-6xl mx-auto">
+                <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-900">Dashboard Overview</h2>
+                    <p className="text-xs text-slate-500">{company.legalName} · FY {company.financialYear}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        localStorage.clear();
+                        setCompany(INITIAL_COMPANY);
+                        setCustomers(INITIAL_CUSTOMERS);
+                        setProducts(INITIAL_PRODUCTS);
+                        setInvoices(INITIAL_INVOICES);
+                      }}
+                      className="text-xs px-3 py-1.5 border border-slate-300 rounded-md hover:bg-slate-100"
+                    >
+                      Reset demo
+                    </button>
+                  </div>
+                </div>
+
+                {/* 4 KPI Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+                    <div className="text-xs text-slate-500 font-medium">Sales (October)</div>
+                    <div className="text-2xl font-bold font-mono-num text-slate-900 mt-2">
+                      {formatCurrency(totalSales)}
+                    </div>
+                    <div className="text-[11px] text-slate-500 mt-1">
+                      {formatCurrency(totalTaxable)} taxable + {formatCurrency(totalTax)} GST
+                    </div>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+                    <div className="text-xs text-slate-500 font-medium">GST collected (October)</div>
+                    <div className="text-2xl font-bold font-mono-num text-slate-900 mt-2">
+                      {formatCurrency(totalTax)}
+                    </div>
+                    <div className="text-[11px] text-slate-500 mt-1">Rule 46 exact split</div>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+                    <div className="text-xs text-slate-500 font-medium">Receivables due</div>
+                    <div className="text-2xl font-bold font-mono-num text-amber-700 mt-2">
+                      {formatCurrency(totalReceivables)}
+                    </div>
+                    <div className="text-[11px] text-slate-500 mt-1">Across debtors</div>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+                    <div className="text-xs text-slate-500 font-medium">Invoices issued</div>
+                    <div className="text-2xl font-bold font-mono-num text-slate-900 mt-2">
+                      {invoices.length} issued
+                    </div>
+                    <div className="text-[11px] text-slate-500 mt-1">0 paise rounding drift</div>
+                  </div>
+                </div>
+
+                {/* Recent Invoices Table */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+                  <div className="p-4 border-b border-slate-100 flex justify-between items-center">
+                    <h3 className="font-bold text-sm text-slate-900">Recent Invoices</h3>
+                    <button onClick={() => setView('invoices')} className="text-xs text-emerald-800 font-semibold hover:underline">
+                      View all ({invoices.length})
+                    </button>
+                  </div>
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-50 text-slate-600 border-b border-slate-100 text-[11px]">
+                      <tr>
+                        <th className="p-3">Invoice No</th>
+                        <th className="p-3">Customer</th>
+                        <th className="p-3">Date</th>
+                        <th className="p-3 text-right">Total</th>
+                        <th className="p-3">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {invoices.map(inv => (
+                        <tr
+                          key={inv.id}
+                          onClick={() => setSelectedInvoice(inv)}
+                          className="hover:bg-slate-50 cursor-pointer"
+                        >
+                          <td className="p-3 font-mono font-bold text-emerald-800">{inv.invoiceNumber}</td>
+                          <td className="p-3 font-medium text-slate-800">{inv.customerName}</td>
+                          <td className="p-3 text-slate-500">{inv.invoiceDate}</td>
+                          <td className="p-3 text-right font-mono-num font-bold">{formatCurrency(inv.grandTotal)}</td>
+                          <td className="p-3">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                              {inv.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
