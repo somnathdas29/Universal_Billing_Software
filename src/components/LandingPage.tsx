@@ -24,10 +24,27 @@ import {
 import { ThemeToggle } from './ThemeToggle';
 
 interface LandingPageProps {
-  onStartBilling: () => void;
+  onStartBilling?: () => void;
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
+  const handleStart = (e?: React.MouseEvent) => {
+    if (onStartBilling) {
+      e?.preventDefault();
+      onStartBilling();
+    } else {
+      window.location.href = '/dashboard';
+    }
+  };
+
+  const handleNewBill = (e?: React.MouseEvent) => {
+    if (onStartBilling) {
+      e?.preventDefault();
+      onStartBilling();
+    } else {
+      window.location.href = '/new-bill';
+    }
+  };
   // Mobile mockup tab state
   const [mobileTab, setMobileTab] = useState<'home' | 'bill' | 'ask'>('home');
 
@@ -119,13 +136,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <button
-              onClick={onStartBilling}
-              className="flex items-center gap-2 px-4 py-2 shimmer-button text-white rounded-lg text-xs font-bold shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
+            <a
+              href="/dashboard"
+              onClick={handleStart}
+              className="flex items-center gap-2 px-4 py-2 shimmer-button text-white rounded-lg text-xs font-bold shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 cursor-pointer"
             >
               <span>Start billing — no login</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </a>
           </div>
         </div>
       </header>
@@ -159,15 +177,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
-          <button
-            onClick={onStartBilling}
-            className="px-7 py-3.5 shimmer-button text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 active:scale-95 group"
+          <a
+            href="/new-bill"
+            onClick={handleNewBill}
+            className="px-7 py-3.5 shimmer-button text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 active:scale-95 group cursor-pointer"
           >
             <span>Start billing — no login needed</span>
             <kbd className="hidden sm:inline-block bg-emerald-950/40 text-emerald-100 text-[10px] px-2 py-0.5 rounded font-mono group-hover:bg-emerald-950/60 transition">
               Alt+N
             </kbd>
-          </button>
+          </a>
 
           <a
             href="#calculator"
@@ -345,13 +364,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
                 </div>
               </div>
 
-              <button
-                onClick={onStartBilling}
-                className="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 active:scale-95 shadow-sm"
+              <a
+                href="/new-bill"
+                onClick={handleNewBill}
+                className="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 active:scale-95 shadow-sm cursor-pointer"
               >
                 <span>Issue bill with this total</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -555,12 +575,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
                       <div className="text-xs font-bold font-mono text-emerald-800">₹45,430.00</div>
                     </div>
 
-                    <button 
-                      onClick={onStartBilling}
-                      className="w-full py-2 bg-emerald-800 text-white rounded-lg text-xs font-bold hover:bg-emerald-900 transition"
+                    <a 
+                      href="/new-bill"
+                      onClick={handleNewBill}
+                      className="w-full py-2 bg-emerald-800 text-white rounded-lg text-xs font-bold hover:bg-emerald-900 transition flex items-center justify-center cursor-pointer"
                     >
                       Print & Clear
-                    </button>
+                    </a>
                   </div>
                 )}
 
@@ -700,12 +721,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
           <p className="text-sm text-emerald-100 max-w-xl mx-auto">
             Zero setup, no monthly subscription traps, runs offline on your counter terminal.
           </p>
-          <button
-            onClick={onStartBilling}
-            className="px-9 py-4 bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-sm rounded-xl shadow-xl hover:shadow-2xl transition active:scale-95 hover:scale-105 duration-200"
+          <a
+            href="/dashboard"
+            onClick={handleStart}
+            className="inline-block px-9 py-4 bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-sm rounded-xl shadow-xl hover:shadow-2xl transition active:scale-95 hover:scale-105 duration-200 cursor-pointer"
           >
             Launch PayzenMax Billing App
-          </button>
+          </a>
         </div>
       </section>
 
