@@ -68,23 +68,25 @@ export const InvoiceDetailModal: React.FC<InvoiceDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-start justify-center p-4 sm:p-6 md:p-8 z-50 overflow-y-auto">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full my-auto border border-slate-200 overflow-hidden flex flex-col">
+    <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-start justify-center p-3 sm:p-6 md:p-8 z-50 overflow-y-auto">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full my-3 sm:my-6 border border-slate-200 overflow-hidden flex flex-col">
         {/* Top Action Bar (No-Print) */}
-        <div className="p-4 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-3 no-print sticky top-0 z-20">
+        <div className="p-4 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-3 no-print sticky top-0 z-30 shadow-md">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition"
+              className="p-1.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition group flex items-center gap-1 text-xs font-semibold"
+              title="Close and return"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Back</span>
             </button>
             <div>
-              <span className="font-bold text-sm tracking-wide">{invoice.invoiceNumber}</span>
-              <span className={`ml-2 text-[10px] px-2 py-0.5 rounded-full font-semibold ${
-                invoice.status === 'PAID' ? 'bg-emerald-500 text-white' :
-                invoice.status === 'PART_PAID' ? 'bg-amber-500 text-white' :
-                invoice.status === 'CANCELLED' ? 'bg-red-500 text-white' : 'bg-slate-700 text-slate-200'
+              <span className="font-bold text-sm tracking-wide font-mono">{invoice.invoiceNumber}</span>
+              <span className={`ml-2 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+                invoice.status === 'PAID' ? 'bg-emerald-500/90 text-white' :
+                invoice.status === 'PART_PAID' ? 'bg-amber-500/90 text-white' :
+                invoice.status === 'CANCELLED' ? 'bg-red-500/90 text-white' : 'bg-slate-700 text-slate-200'
               }`}>
                 {invoice.status}
               </span>

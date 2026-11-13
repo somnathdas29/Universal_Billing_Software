@@ -86,25 +86,47 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       <aside className={`
         fixed lg:static top-0 bottom-0 left-0 z-50
-        w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full select-none shrink-0 no-print
-        transition-transform duration-300 ease-in-out
+        w-64 bg-white dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200/90 dark:border-slate-800/80 flex flex-col h-full select-none shrink-0 no-print
+        transition-all duration-300 ease-in-out shadow-lg lg:shadow-none
         ${isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
+        {/* Top Home Return Banner */}
+        <div className="px-3 pt-3">
+          <button
+            onClick={() => handleNavClick('landing')}
+            className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-emerald-800 dark:text-emerald-300 bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-200/90 dark:border-emerald-800/50 hover:bg-emerald-100/80 dark:hover:bg-emerald-900/40 hover:border-emerald-300 dark:hover:border-emerald-700 transition group shadow-xs"
+            title="Return to PayzenMax Landing Page"
+          >
+            <span className="flex items-center gap-2">
+              <span className="p-1 rounded bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 group-hover:-translate-x-0.5 transition-transform shadow-xs">
+                ←
+              </span>
+              <span className="flex items-center gap-1.5 font-bold">
+                <Home className="w-3.5 h-3.5" />
+                Home Page
+              </span>
+            </span>
+            <span className="text-[10px] uppercase font-mono tracking-wider opacity-70 group-hover:opacity-100 transition">
+              Landing
+            </span>
+          </button>
+        </div>
+
         {/* Top Brand Header */}
-        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-100 dark:border-slate-800/70 flex items-center justify-between">
           <div 
             onClick={() => handleNavClick('landing')}
             className="flex items-center gap-2.5 cursor-pointer group flex-1 overflow-hidden"
             title="Go to Landing Page"
           >
-            <div className="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm group-hover:bg-emerald-800 transition shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-emerald-700 dark:bg-emerald-600 flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm group-hover:bg-emerald-800 dark:group-hover:bg-emerald-500 transition shrink-0">
               PM
             </div>
             <div className="overflow-hidden">
               <h1 className="font-bold text-sm tracking-tight text-slate-900 dark:text-white truncate flex items-center gap-1.5 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">
                 PayzenMax.com
               </h1>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">Universal Billing Platform</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate font-medium">Universal Billing</p>
             </div>
           </div>
 
@@ -122,11 +144,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* GSTIN / Business Meta Badge */}
-        <div className="px-4 py-2 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 space-y-0.5">
-          <div className="font-mono text-slate-700 dark:text-slate-300 font-medium truncate">
-            {company.taxNumberLabel}: {company.taxNumber || 'Unregistered'}
+        <div className="px-4 py-2 bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800/60 text-[11px] text-slate-500 dark:text-slate-400 space-y-0.5">
+          <div className="font-mono text-slate-700 dark:text-slate-300 font-semibold truncate flex items-center justify-between">
+            <span>{company.taxNumberLabel}: {company.taxNumber || 'Unregistered'}</span>
           </div>
-          <div className="truncate">
+          <div className="truncate text-slate-500 dark:text-slate-400 text-[10px]">
             {company.state} {company.stateCode ? `(${company.stateCode})` : ''} · FY {company.financialYear}
           </div>
         </div>
@@ -135,22 +157,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="p-3">
           <button
             onClick={() => handleNavClick('new_bill')}
-            className="w-full flex items-center justify-between px-3.5 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-sm rounded-lg shadow-sm transition active:scale-[0.98]"
+            className="w-full flex items-center justify-between px-3.5 py-2.5 bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg dark:shadow-emerald-950/40 transition active:scale-[0.98] border border-emerald-600/30"
           >
             <span className="flex items-center gap-2">
               <Plus className="w-4 h-4" />
               New bill
             </span>
-            <kbd className="text-[10px] bg-emerald-950/40 text-emerald-100 px-1.5 py-0.5 rounded font-mono">
+            <kbd className="text-[10px] bg-emerald-950/50 text-emerald-100 px-1.5 py-0.5 rounded font-mono font-bold border border-emerald-500/20">
               Alt+N
             </kbd>
           </button>
         </div>
 
         {/* Navigation Links */}
-        <div className="flex-1 overflow-y-auto px-2 space-y-5 py-2">
+        <div className="flex-1 overflow-y-auto px-2 space-y-5 py-2 custom-scrollbar">
           <div>
-            <div className="px-3 pb-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+            <div className="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
               Operations
             </div>
             <div className="space-y-0.5">
@@ -161,23 +183,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id as NavView)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition ${
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition ${
                       isActive
-                        ? 'bg-slate-100 text-slate-900 font-semibold'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'bg-emerald-50/80 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300 font-bold border border-emerald-200/60 dark:border-emerald-800/40 shadow-xs'
+                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     <span className="flex items-center gap-2.5 truncate">
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-400'}`} />
+                      <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'}`} />
                       <span className="truncate">{item.label}</span>
                     </span>
                     {item.badge !== undefined && (
-                      <span className="text-[10px] font-mono font-medium px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded-full">
+                      <span className={`text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded-full ${
+                        isActive
+                          ? 'bg-emerald-200/80 text-emerald-900 dark:bg-emerald-900/60 dark:text-emerald-200'
+                          : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                      }`}>
                         {item.badge}
                       </span>
                     )}
                     {item.alertBadge && (
-                      <span className="text-[10px] font-mono font-medium px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded">
+                      <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 rounded border border-amber-200 dark:border-amber-800/60">
                         {item.alertBadge}
                       </span>
                     )}
@@ -188,7 +214,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           <div>
-            <div className="px-3 pb-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+            <div className="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
               Reports & Tax
             </div>
             <div className="space-y-0.5">
@@ -199,14 +225,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id as NavView)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition ${
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition ${
                       isActive
-                        ? 'bg-slate-100 text-slate-900 font-semibold'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'bg-emerald-50/80 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300 font-bold border border-emerald-200/60 dark:border-emerald-800/40 shadow-xs'
+                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     <span className="flex items-center gap-2.5 truncate">
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-400'}`} />
+                      <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'}`} />
                       <span className="truncate">{item.label}</span>
                     </span>
                   </button>
@@ -216,37 +242,41 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           <div>
-            <div className="px-3 pb-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+            <div className="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
               System
             </div>
             <button
               onClick={() => handleNavClick('settings')}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition ${
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition ${
                 currentView === 'settings'
-                  ? 'bg-slate-100 text-slate-900 font-semibold'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-emerald-50/80 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300 font-bold border border-emerald-200/60 dark:border-emerald-800/40 shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <span className="flex items-center gap-2.5">
-                <Settings className={`w-4 h-4 ${currentView === 'settings' ? 'text-emerald-700' : 'text-slate-400'}`} />
+                <Settings className={`w-4 h-4 ${currentView === 'settings' ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'}`} />
                 Settings & backup
               </span>
             </button>
           </div>
         </div>
 
-        {/* Offline Status Badge */}
-        <div className="p-3 border-t border-slate-100 bg-slate-50/60 space-y-2">
+        {/* Offline Status Badge & Bottom Home Link */}
+        <div className="p-3 border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-900/80 space-y-2">
           <button
             onClick={() => handleNavClick('landing')}
-            className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 rounded font-medium transition"
+            className="w-full flex items-center justify-between px-2.5 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60 rounded-md font-medium transition group"
           >
-            <Home className="w-3.5 h-3.5 text-slate-400" />
-            <span>View Landing Page</span>
+            <span className="flex items-center gap-2">
+              <span className="text-emerald-600 dark:text-emerald-400 group-hover:-translate-x-0.5 transition-transform font-bold">←</span>
+              <Home className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
+              <span>Back to Home</span>
+            </span>
+            <span className="text-[10px] text-slate-400">Exit</span>
           </button>
-          <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span className="truncate">Saved on device · Offline</span>
+          <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 font-medium px-1">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <span className="truncate">Saved on device · Offline ready</span>
           </div>
         </div>
       </aside>

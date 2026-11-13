@@ -34,22 +34,22 @@ export const Gstr1ReportView: React.FC<Gstr1ReportViewProps> = ({ company, invoi
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80 dark:border-slate-800">
         <div>
-          <div className="flex items-center gap-2">
-            <h2 className="text-xl font-bold text-slate-900 tracking-tight">GSTR-1 Monthly Return Filing</h2>
-            <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-semibold text-xs">
+          <div className="flex items-center gap-2.5">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">GSTR-1 Monthly Return Filing</h2>
+            <span className="px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 rounded-full font-bold text-xs border border-emerald-300 dark:border-emerald-700">
               Direct GSTN Schema
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
             Auto-categorized into CBIC GSTR-1 Portal Tables · 100% Client-Side Compiler
           </p>
         </div>
 
         <button
           onClick={() => downloadGstr1JsonFile(company, invoices)}
-          className="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold rounded-lg flex items-center gap-2 shadow-xs transition"
+          className="px-4 py-2.5 bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white text-xs font-semibold rounded-xl flex items-center gap-2 shadow-md hover:shadow-lg dark:shadow-emerald-950/50 transition border border-emerald-600/30"
         >
           <Download className="w-4 h-4" />
           Download GSTR-1 JSON File
@@ -57,9 +57,9 @@ export const Gstr1ReportView: React.FC<Gstr1ReportViewProps> = ({ company, invoi
       </div>
 
       {/* Compliance Callout Banner */}
-      <div className="p-4 bg-emerald-50/60 border border-emerald-200 rounded-xl flex items-start gap-3">
-        <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-        <div className="text-xs text-emerald-900 space-y-0.5">
+      <div className="p-4 bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 rounded-2xl flex items-start gap-3">
+        <ShieldCheck className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0 mt-0.5" />
+        <div className="text-xs text-emerald-950 dark:text-emerald-200 space-y-0.5 font-medium">
           <span className="font-bold">Zero-Lockin GSTR-1 Export:</span> The generated JSON strictly adheres to the official GST Portal offline utility schema. You or your Chartered Accountant can upload this file directly on <strong>gst.gov.in → Returns Dashboard → GSTR-1 → Prepare Offline</strong> without any third-party software.
         </div>
       </div>

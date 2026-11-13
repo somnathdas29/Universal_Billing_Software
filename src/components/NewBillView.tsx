@@ -305,38 +305,39 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/90 dark:border-slate-800">
         <div className="flex items-center gap-3">
           <button
             onClick={onCancel}
-            className="p-2 rounded-lg hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition"
+            className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+            title="Cancel & Back to Overview"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
           </button>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl font-bold text-slate-900 tracking-tight">New Tax Invoice</h2>
-              <span className="font-mono text-xs px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">
+            <div className="flex items-center gap-2.5">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">New Tax Invoice</h2>
+              <span className="font-mono text-xs px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 rounded-md font-bold border border-emerald-300/80 dark:border-emerald-700/60 shadow-2xs">
                 {invoiceNumber}
               </span>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
-              CBIC Rule 46 Compliant · Counter Billing Flow
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+              CBIC Rule 46 Compliant · High-Speed Counter Billing Flow
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
+        <div className="flex items-center gap-2.5 w-full sm:w-auto">
           <button
             onClick={() => handleSaveBill(false)}
-            className="flex-1 sm:flex-initial px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition"
+            className="flex-1 sm:flex-initial px-4 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border border-slate-300 dark:border-slate-700 transition shadow-xs"
           >
-            <Save className="w-4 h-4" />
+            <Save className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             Save bill
           </button>
           <button
             onClick={() => handleSaveBill(true)}
-            className="flex-1 sm:flex-initial px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-xs transition"
+            className="flex-1 sm:flex-initial px-5 py-2.5 bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg dark:shadow-emerald-950/50 transition border border-emerald-600/30"
           >
             <Printer className="w-4 h-4" />
             Save & Print
@@ -345,14 +346,14 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
       </div>
 
       {/* Primary Bill Information Form */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm">
         {/* Customer Column */}
         <div className="space-y-3 relative">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold text-slate-700">Customer Details</label>
+            <label className="text-xs font-bold text-slate-800 dark:text-slate-200">Customer Details</label>
             <button
               onClick={() => setShowQuickAddCust(true)}
-              className="text-[11px] text-emerald-700 hover:underline flex items-center gap-1 font-medium"
+              className="text-[11px] text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-1 font-semibold"
             >
               <UserPlus className="w-3 h-3" />
               + Quick add
@@ -370,13 +371,13 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                 setShowCustomerDropdown(true);
               }}
               onFocus={() => setShowCustomerDropdown(true)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-700"
+              className="w-full px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50/70 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/30 dark:focus:ring-emerald-500/30 focus:border-emerald-600 dark:focus:border-emerald-500 transition"
             />
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute right-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 absolute right-3 top-2.5" />
 
             {/* Customer Dropdown */}
             {showCustomerDropdown && (
-              <div className="absolute left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-20 max-h-52 overflow-y-auto">
+              <div className="absolute left-0 right-0 mt-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl z-20 max-h-56 overflow-y-auto">
                 {customers
                   .filter(c => c.name.toLowerCase().includes(customerSearch.toLowerCase()))
                   .map(cust => (
@@ -387,10 +388,10 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                         setCustomerSearch(cust.name);
                         setShowCustomerDropdown(false);
                       }}
-                      className="p-2.5 text-xs hover:bg-slate-50 cursor-pointer border-b border-slate-100 last:border-none"
+                      className="p-3 text-xs hover:bg-slate-50 dark:hover:bg-slate-800/70 cursor-pointer border-b border-slate-100 dark:border-slate-800/60 last:border-none transition"
                     >
-                      <div className="font-semibold text-slate-800">{cust.name}</div>
-                      <div className="text-[10px] text-slate-500 font-mono">
+                      <div className="font-semibold text-slate-800 dark:text-slate-200">{cust.name}</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
                         {cust.taxNumber ? `GSTIN: ${cust.taxNumber}` : 'Unregistered B2C'} · {cust.state}
                       </div>
                     </div>
@@ -400,19 +401,20 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
           </div>
 
           {selectedCustomer ? (
-            <div className="p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs space-y-1">
-              <div className="font-mono text-[11px] text-slate-700">
-                GSTIN: <span className="font-semibold">{selectedCustomer.taxNumber || 'None (B2C)'}</span>
+            <div className="p-3.5 bg-slate-50/90 dark:bg-slate-800/50 rounded-xl border border-slate-200/70 dark:border-slate-700/60 text-xs space-y-1.5">
+              <div className="font-mono text-[11px] text-slate-700 dark:text-slate-300">
+                GSTIN: <span className="font-semibold text-emerald-700 dark:text-emerald-400">{selectedCustomer.taxNumber || 'None (B2C)'}</span>
               </div>
-              <div className="text-slate-600 truncate">{selectedCustomer.billingAddress}</div>
+              <div className="text-slate-600 dark:text-slate-400 truncate text-[11px]">{selectedCustomer.billingAddress}</div>
               {selectedCustomer.balanceDue > 0 && (
-                <div className="text-[11px] text-amber-700 font-medium">
-                  Past Balance Due: {formatCurrency(selectedCustomer.balanceDue, company.currencySymbol)}
+                <div className="text-[11px] text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
+                  <span>Past Balance:</span>
+                  <span className="font-mono-num">{formatCurrency(selectedCustomer.balanceDue, company.currencySymbol)}</span>
                 </div>
               )}
             </div>
           ) : (
-            <div className="text-[11px] text-slate-400 italic">
+            <div className="text-[11px] text-slate-400 dark:text-slate-500 italic px-1">
               Unsaved walk-in client or cash counter bill
             </div>
           )}
@@ -420,11 +422,11 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
 
         {/* Place of Supply & Tax Rules */}
         <div className="space-y-3">
-          <label className="text-xs font-bold text-slate-700">Place of Supply (POS)</label>
+          <label className="text-xs font-bold text-slate-800 dark:text-slate-200">Place of Supply (POS)</label>
           <select
             value={placeOfSupplyCode}
             onChange={e => setPlaceOfSupplyCode(e.target.value)}
-            className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-700 bg-white"
+            className="w-full px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50/70 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600/30 dark:focus:ring-emerald-500/30 focus:border-emerald-600 dark:focus:border-emerald-500 transition"
           >
             {INDIAN_STATES.map(s => (
               <option key={s.code} value={s.code}>
@@ -433,26 +435,26 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
             ))}
           </select>
 
-          <div className="p-3 rounded-lg border border-slate-100 bg-slate-50 text-xs space-y-1">
-            <div className="font-semibold text-slate-800 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-slate-50/90 dark:bg-slate-800/50 text-xs space-y-1.5">
+            <div className="font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-between">
               <span>Supply Type:</span>
               <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                isInterstate ? 'bg-purple-100 text-purple-800' : 'bg-emerald-100 text-emerald-800'
+                isInterstate ? 'bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800' : 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
               }`}>
                 {isInterstate ? 'Inter-State (IGST)' : 'Intra-State (CGST + SGST)'}
               </span>
             </div>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               Seller: {company.state} ({company.stateCode}) → Buyer POS: {placeOfSupplyCode}
             </p>
           </div>
 
-          <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer pt-1">
+          <label className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 cursor-pointer pt-1">
             <input
               type="checkbox"
               checked={reverseCharge}
               onChange={e => setReverseCharge(e.target.checked)}
-              className="rounded text-emerald-700 focus:ring-emerald-700"
+              className="rounded text-emerald-700 dark:text-emerald-500 focus:ring-emerald-600 dark:bg-slate-800 dark:border-slate-700"
             />
             <span>Tax payable under Reverse Charge (CBIC R.46)</span>
           </label>
@@ -460,48 +462,51 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
 
         {/* Invoice Dates & Terms */}
         <div className="space-y-3">
-          <label className="text-xs font-bold text-slate-700">Dates & Payment Terms</label>
+          <label className="text-xs font-bold text-slate-800 dark:text-slate-200">Dates & Payment Terms</label>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <span className="text-[10px] text-slate-500">Invoice Date</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Invoice Date</span>
               <input
                 type="date"
                 value={invoiceDate}
                 onChange={e => setInvoiceDate(e.target.value)}
-                className="w-full px-2.5 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-none"
+                className="w-full mt-0.5 px-2.5 py-1.5 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50/70 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-600"
               />
             </div>
             <div>
-              <span className="text-[10px] text-slate-500">Due Date</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Due Date</span>
               <input
                 type="date"
                 value={dueDate}
                 onChange={e => setDueDate(e.target.value)}
-                className="w-full px-2.5 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-none"
+                className="w-full mt-0.5 px-2.5 py-1.5 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50/70 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-600"
               />
             </div>
           </div>
 
           <div>
-            <span className="text-[10px] text-slate-500">Terms / Memo</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Terms / Memo</span>
             <input
               type="text"
               placeholder="e.g. Net 15 days, PO #994"
               value={notes}
               onChange={e => setNotes(e.target.value)}
-              className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-none"
+              className="w-full mt-0.5 px-3 py-1.5 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50/70 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-600"
             />
           </div>
         </div>
       </div>
 
       {/* Line Items Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="font-bold text-sm text-slate-900">Items & Charges</h3>
+      <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="p-4 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+          <div>
+            <h3 className="font-bold text-sm text-slate-900 dark:text-white">Items & Charges</h3>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Deterministic 0.00 paise tax computation</p>
+          </div>
           <button
             onClick={addNewLine}
-            className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-md text-xs font-semibold flex items-center gap-1.5 border border-emerald-200 transition"
+            className="px-3.5 py-1.5 bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-emerald-200 dark:border-emerald-800 transition"
           >
             <Plus className="w-3.5 h-3.5" />
             Add item
@@ -510,33 +515,33 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-600 border-b border-slate-200 text-[11px]">
+            <thead className="bg-slate-50/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700/80 text-[11px] uppercase tracking-wider font-semibold">
               <tr>
-                <th className="py-2.5 px-3 w-8">#</th>
-                <th className="py-2.5 px-3 min-w-[200px]">Item / Product</th>
-                <th className="py-2.5 px-3 w-24">HSN/SAC</th>
-                <th className="py-2.5 px-3 w-20">Qty</th>
-                <th className="py-2.5 px-3 w-20">Unit</th>
-                <th className="py-2.5 px-3 w-28 text-right">Price ({company.currencySymbol})</th>
-                <th className="py-2.5 px-3 w-16 text-right">Disc %</th>
-                <th className="py-2.5 px-3 w-24 text-right">Taxable</th>
-                <th className="py-2.5 px-3 w-20">GST %</th>
-                <th className="py-2.5 px-3 w-28 text-right">Total ({company.currencySymbol})</th>
-                <th className="py-2.5 px-3 w-10"></th>
+                <th className="py-3 px-3 w-8">#</th>
+                <th className="py-3 px-3 min-w-[220px]">Item / Product</th>
+                <th className="py-3 px-3 w-24">HSN/SAC</th>
+                <th className="py-3 px-3 w-20">Qty</th>
+                <th className="py-3 px-3 w-20">Unit</th>
+                <th className="py-3 px-3 w-28 text-right">Price ({company.currencySymbol})</th>
+                <th className="py-3 px-3 w-16 text-right">Disc %</th>
+                <th className="py-3 px-3 w-24 text-right">Taxable</th>
+                <th className="py-3 px-3 w-20">GST %</th>
+                <th className="py-3 px-3 w-28 text-right">Total ({company.currencySymbol})</th>
+                <th className="py-3 px-3 w-10"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
               {items.map((line, idx) => (
-                <tr key={line.id} className="hover:bg-slate-50/50">
-                  <td className="py-2 px-3 text-slate-400 font-mono text-[11px]">{idx + 1}</td>
+                <tr key={line.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition">
+                  <td className="py-2.5 px-3 text-slate-400 font-mono text-[11px]">{idx + 1}</td>
 
                   {/* Product Selector / Description */}
-                  <td className="py-2 px-3">
-                    <div className="space-y-1">
+                  <td className="py-2.5 px-3">
+                    <div className="space-y-1.5">
                       <select
                         onChange={e => handleProductSelect(idx, e.target.value)}
                         value={line.productId || ''}
-                        className="w-full text-xs border border-slate-200 rounded px-2 py-1 bg-white text-slate-800"
+                        className="w-full text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none"
                       >
                         <option value="">-- Choose from Catalog or Enter Custom --</option>
                         {products.map(p => (
@@ -550,40 +555,40 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                         placeholder="Item description..."
                         value={line.description}
                         onChange={e => handleItemChange(idx, 'description', e.target.value)}
-                        className="w-full text-xs border border-slate-200 rounded px-2 py-1 font-medium text-slate-900"
+                        className="w-full text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 font-medium text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 focus:outline-none focus:border-emerald-600"
                       />
                     </div>
                   </td>
 
                   {/* HSN/SAC */}
-                  <td className="py-2 px-3">
+                  <td className="py-2.5 px-3">
                     <input
                       type="text"
                       placeholder="8525"
                       value={line.hsnSacCode}
                       onChange={e => handleItemChange(idx, 'hsnSacCode', e.target.value)}
-                      className="w-full text-xs font-mono border border-slate-200 rounded px-2 py-1 text-center"
+                      className="w-full text-xs font-mono border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-center bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     />
                   </td>
 
                   {/* Quantity */}
-                  <td className="py-2 px-3">
+                  <td className="py-2.5 px-3">
                     <input
                       type="number"
                       min="1"
                       step="any"
                       value={line.quantity}
                       onChange={e => handleItemChange(idx, 'quantity', e.target.value)}
-                      className="w-full text-xs font-mono font-semibold border border-slate-200 rounded px-2 py-1 text-right"
+                      className="w-full text-xs font-mono font-semibold border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-right bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     />
                   </td>
 
                   {/* UOM */}
-                  <td className="py-2 px-3">
+                  <td className="py-2.5 px-3">
                     <select
                       value={line.uom}
                       onChange={e => handleItemChange(idx, 'uom', e.target.value)}
-                      className="w-full text-xs border border-slate-200 rounded px-1.5 py-1 bg-white"
+                      className="w-full text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1.5 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     >
                       {UOM_LIST.map(u => (
                         <option key={u} value={u}>{u}</option>
@@ -592,39 +597,39 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                   </td>
 
                   {/* Unit Price */}
-                  <td className="py-2 px-3 text-right">
+                  <td className="py-2.5 px-3 text-right">
                     <input
                       type="number"
                       step="any"
                       value={line.unitPrice}
                       onChange={e => handleItemChange(idx, 'unitPrice', e.target.value)}
-                      className="w-full text-xs font-mono font-medium border border-slate-200 rounded px-2 py-1 text-right"
+                      className="w-full text-xs font-mono font-medium border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-right bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     />
                   </td>
 
                   {/* Discount % */}
-                  <td className="py-2 px-3 text-right">
+                  <td className="py-2.5 px-3 text-right">
                     <input
                       type="number"
                       min="0"
                       max="100"
                       value={line.discountPercent}
                       onChange={e => handleItemChange(idx, 'discountPercent', e.target.value)}
-                      className="w-full text-xs font-mono border border-slate-200 rounded px-2 py-1 text-right"
+                      className="w-full text-xs font-mono border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-right bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     />
                   </td>
 
                   {/* Taxable Amount (Calculated) */}
-                  <td className="py-2 px-3 text-right font-mono-num font-medium text-slate-700">
+                  <td className="py-2.5 px-3 text-right font-mono-num font-semibold text-slate-700 dark:text-slate-300">
                     {formatCurrency(line.taxableAmount, '')}
                   </td>
 
                   {/* Tax Rate % */}
-                  <td className="py-2 px-3">
+                  <td className="py-2.5 px-3">
                     <select
                       value={line.taxRate}
                       onChange={e => handleItemChange(idx, 'taxRate', Number(e.target.value))}
-                      className="w-full text-xs border border-slate-200 rounded px-1.5 py-1 bg-white font-mono"
+                      className="w-full text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1.5 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-mono"
                     >
                       {GST_SLABS.map(s => (
                         <option key={s} value={s}>{s}%</option>
@@ -633,16 +638,17 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                   </td>
 
                   {/* Line Total */}
-                  <td className="py-2 px-3 text-right font-mono-num font-bold text-slate-900">
+                  <td className="py-2.5 px-3 text-right font-mono-num font-bold text-slate-900 dark:text-emerald-400">
                     {formatCurrency(line.lineTotal, '')}
                   </td>
 
                   {/* Remove */}
-                  <td className="py-2 px-3 text-center">
+                  <td className="py-2.5 px-3 text-center">
                     <button
                       onClick={() => removeLine(idx)}
                       disabled={items.length <= 1}
-                      className="text-slate-400 hover:text-red-600 disabled:opacity-20 transition"
+                      className="text-slate-400 hover:text-red-600 dark:hover:text-red-400 disabled:opacity-20 transition"
+                      title="Remove item row"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -657,9 +663,9 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
       {/* Bill Totals & Payment Settlement Bar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Payment Settlement Mode */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h4 className="font-bold text-xs text-slate-700 tracking-wide uppercase">
-            Settlement & Payment
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+          <h4 className="font-bold text-xs text-slate-700 dark:text-slate-300 tracking-wide uppercase">
+            Settlement & Payment Mode
           </h4>
 
           <div className="grid grid-cols-3 gap-2">
@@ -667,10 +673,10 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
               <button
                 key={mode}
                 onClick={() => setPaymentMode(mode)}
-                className={`py-2 px-2.5 rounded-lg text-xs font-medium border text-center transition ${
+                className={`py-2 px-2.5 rounded-xl text-xs font-semibold border text-center transition ${
                   paymentMode === mode
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                    : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                    ? 'bg-slate-900 dark:bg-emerald-700 text-white border-slate-900 dark:border-emerald-600 shadow-sm'
+                    : 'bg-slate-50/80 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                 }`}
               >
                 {mode.replace('_', ' ')}
@@ -680,19 +686,21 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
 
           <div className="grid grid-cols-2 gap-4 pt-2">
             <div>
-              <span className="text-xs font-medium text-slate-600">Amount Received ({company.currencySymbol})</span>
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Amount Received ({company.currencySymbol})</span>
               <input
                 type="number"
                 step="any"
                 value={amountReceived}
                 onChange={e => setAmountReceived(Number(e.target.value) || 0)}
-                className="w-full mt-1 px-3 py-2 text-sm font-mono font-bold border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-700"
+                className="w-full mt-1.5 px-3 py-2 text-sm font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50/80 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
               />
             </div>
             <div>
-              <span className="text-xs font-medium text-slate-600">Balance Due</span>
-              <div className={`mt-1 px-3 py-2 text-sm font-mono font-bold rounded-lg border ${
-                balanceDue > 0 ? 'bg-amber-50 text-amber-800 border-amber-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Balance Due</span>
+              <div className={`mt-1.5 px-3 py-2 text-sm font-mono font-bold rounded-xl border ${
+                balanceDue > 0
+                  ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800/60'
+                  : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60'
               }`}>
                 {formatCurrency(balanceDue, company.currencySymbol)}
               </div>
@@ -701,10 +709,10 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
         </div>
 
         {/* Calculation Summary Box */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-2.5 text-xs">
-          <div className="flex justify-between text-slate-600">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-2.5 text-xs">
+          <div className="flex justify-between text-slate-600 dark:text-slate-400">
             <span>Subtotal (Taxable Value):</span>
-            <span className="font-mono-num font-medium text-slate-900">
+            <span className="font-mono-num font-semibold text-slate-900 dark:text-slate-100">
               {formatCurrency(subtotalTaxable, company.currencySymbol)}
             </span>
           </div>
@@ -712,7 +720,7 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
           {company.taxSystem === 'GST_INDIA' && (
             <>
               {isInterstate ? (
-                <div className="flex justify-between text-purple-700 font-medium">
+                <div className="flex justify-between text-purple-700 dark:text-purple-400 font-semibold">
                   <span>IGST (Integrated Tax):</span>
                   <span className="font-mono-num">
                     {formatCurrency(igstTotal, company.currencySymbol)}
@@ -720,15 +728,15 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                 </div>
               ) : (
                 <>
-                  <div className="flex justify-between text-slate-600">
+                  <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>CGST (Central Tax):</span>
-                    <span className="font-mono-num font-medium text-slate-900">
+                    <span className="font-mono-num font-semibold text-slate-900 dark:text-slate-100">
                       {formatCurrency(cgstTotal, company.currencySymbol)}
                     </span>
                   </div>
-                  <div className="flex justify-between text-slate-600">
+                  <div className="flex justify-between text-slate-600 dark:text-slate-400">
                     <span>SGST (State Tax):</span>
-                    <span className="font-mono-num font-medium text-slate-900">
+                    <span className="font-mono-num font-semibold text-slate-900 dark:text-slate-100">
                       {formatCurrency(sgstTotal, company.currencySymbol)}
                     </span>
                   </div>
@@ -737,16 +745,16 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
             </>
           )}
 
-          <div className="flex justify-between text-slate-500 text-[11px]">
+          <div className="flex justify-between text-slate-500 dark:text-slate-400 text-[11px]">
             <span>Round-off adjustment:</span>
             <span className="font-mono-num">
               {roundOff >= 0 ? `+${roundOff.toFixed(2)}` : roundOff.toFixed(2)}
             </span>
           </div>
 
-          <div className="pt-3 border-t border-slate-200 flex justify-between items-baseline">
-            <span className="text-sm font-bold text-slate-900">Grand Total:</span>
-            <span className="text-2xl font-bold font-mono-num text-emerald-800">
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-between items-baseline">
+            <span className="text-sm font-bold text-slate-900 dark:text-white">Grand Total:</span>
+            <span className="text-2xl sm:text-3xl font-extrabold font-mono-num text-emerald-700 dark:text-emerald-400">
               {formatCurrency(grandTotal, company.currencySymbol)}
             </span>
           </div>
@@ -755,30 +763,30 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
 
       {/* Quick Add Customer Modal */}
       {showQuickAddCust && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <form
             onSubmit={handleSaveQuickCustomer}
-            className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 border border-slate-200 space-y-4 animate-in fade-in zoom-in-95"
+            className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 space-y-4 animate-in fade-in zoom-in-95"
           >
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-              <UserPlus className="w-4 h-4 text-emerald-700" />
+            <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+              <UserPlus className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
               Quick Add Customer
             </h3>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Customer / Trade Name *</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Customer / Trade Name *</label>
               <input
                 type="text"
                 required
                 value={newCustName}
                 onChange={e => setNewCustName(e.target.value)}
                 placeholder="e.g. Apex Infotech Solutions"
-                className="w-full mt-1 px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-700"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-700"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">GSTIN (Optional for B2C)</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">GSTIN (Optional for B2C)</label>
               <input
                 type="text"
                 maxLength={15}
@@ -793,13 +801,13 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                   }
                 }}
                 placeholder="27AAJCV4821M1Z6"
-                className="w-full mt-1 px-3 py-1.5 text-xs font-mono border border-slate-300 rounded-lg focus:outline-none"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-semibold text-slate-700">State & Code</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">State & Code</label>
                 <select
                   value={newCustStateCode}
                   onChange={e => {
@@ -809,7 +817,7 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                       setNewCustState(st.name);
                     }
                   }}
-                  className="w-full mt-1 px-2.5 py-1.5 text-xs border border-slate-300 rounded-lg bg-white"
+                  className="w-full mt-1 px-2.5 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                 >
                   {INDIAN_STATES.map(s => (
                     <option key={s.code} value={s.code}>{s.code} - {s.name}</option>
@@ -817,39 +825,39 @@ export const NewBillView: React.FC<NewBillViewProps> = ({
                 </select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-700">Phone</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Phone</label>
                 <input
                   type="text"
                   value={newCustPhone}
                   onChange={e => setNewCustPhone(e.target.value)}
                   placeholder="+91 98..."
-                  className="w-full mt-1 px-3 py-1.5 text-xs border border-slate-300 rounded-lg"
+                  className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Billing Address</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Billing Address</label>
               <textarea
                 rows={2}
                 value={newCustAddress}
                 onChange={e => setNewCustAddress(e.target.value)}
                 placeholder="Shop/Street address..."
-                className="w-full mt-1 px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-none"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none"
               />
             </div>
 
-            <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+            <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
               <button
                 type="button"
                 onClick={() => setShowQuickAddCust(false)}
-                className="px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg"
+                className="px-3 py-2 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-semibold"
+                className="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-semibold shadow-xs transition"
               >
                 Save & Select
               </button>

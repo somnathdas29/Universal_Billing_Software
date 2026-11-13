@@ -125,24 +125,29 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
       {/* Top Header Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-200">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-slate-800">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight">Overview</h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            FY {company.financialYear} · {company.legalName}
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Financial Overview</h2>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+              Live Ledger
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+            FY {company.financialYear} · {company.legalName} ({company.state})
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex bg-slate-200/70 p-1 rounded-lg text-xs font-medium text-slate-600">
-            <span className="px-2.5 py-1 rounded bg-white text-slate-900 shadow-xs">This month</span>
-            <span className="px-2.5 py-1 text-slate-500 cursor-not-allowed">Today</span>
-            <span className="px-2.5 py-1 text-slate-500 cursor-not-allowed">FY 2026-27</span>
+          <div className="flex bg-slate-200/70 dark:bg-slate-800/80 p-1 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 border border-slate-300/50 dark:border-slate-700/60">
+            <span className="px-3 py-1 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs">This month</span>
+            <span className="px-3 py-1 text-slate-400 dark:text-slate-500 cursor-not-allowed">Today</span>
+            <span className="px-3 py-1 text-slate-400 dark:text-slate-500 cursor-not-allowed">FY 2026-27</span>
           </div>
 
           <button
             onClick={onResetDemo}
-            className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 rounded-md font-medium border border-slate-300 transition"
+            className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-semibold border border-slate-300 dark:border-slate-700 transition"
           >
             Reset demo
           </button>
@@ -150,84 +155,84 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* 4 Key Figures Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {/* Sales Card */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs relative group">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-5 sm:p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-md dark:hover:border-emerald-500/30 transition group relative">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold">
             <span>Sales (October)</span>
             <button
               onClick={() => setCalcModal('sales')}
-              className="text-slate-400 hover:text-emerald-700 transition"
+              className="text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition"
               title="How is this calculated?"
             >
               <HelpCircle className="w-3.5 h-3.5" />
             </button>
           </div>
-          <div className="text-2xl font-bold font-mono-num text-slate-900 mt-2">
+          <div className="text-2xl sm:text-3xl font-extrabold font-mono-num text-slate-900 dark:text-white mt-2.5 tracking-tight">
             {formatCurrency(totalSales, company.currencySymbol)}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">
-            {formatCurrency(totalTaxable, company.currencySymbol)} taxable + {formatCurrency(totalTax, company.currencySymbol)} {company.taxSystem === 'GST_INDIA' ? 'GST' : 'Tax'}
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 flex items-center gap-1">
+            <span className="text-emerald-700 dark:text-emerald-400 font-semibold">{formatCurrency(totalTaxable, company.currencySymbol)}</span> taxable + <span>{formatCurrency(totalTax, company.currencySymbol)} {company.taxSystem === 'GST_INDIA' ? 'GST' : 'Tax'}</span>
           </div>
         </div>
 
         {/* GST Collected Card */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs relative">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-5 sm:p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-md dark:hover:border-emerald-500/30 transition relative">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold">
             <span>{company.taxSystem === 'GST_INDIA' ? 'GST collected (October)' : 'Tax liability'}</span>
             <button
               onClick={() => setCalcModal('gst')}
-              className="text-slate-400 hover:text-emerald-700 transition"
+              className="text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition"
               title="How is this calculated?"
             >
               <HelpCircle className="w-3.5 h-3.5" />
             </button>
           </div>
-          <div className="text-2xl font-bold font-mono-num text-slate-900 mt-2">
+          <div className="text-2xl sm:text-3xl font-extrabold font-mono-num text-slate-900 dark:text-white mt-2.5 tracking-tight">
             {formatCurrency(totalTax, company.currencySymbol)}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 truncate">
             CGST: {formatCurrency(totalCgst, company.currencySymbol)} · SGST: {formatCurrency(totalSgst, company.currencySymbol)} · IGST: {formatCurrency(totalIgst, company.currencySymbol)}
           </div>
         </div>
 
         {/* Receivables Due Card */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs relative">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-5 sm:p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-md dark:hover:border-emerald-500/30 transition relative">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold">
             <span>Receivables due</span>
             <button
               onClick={() => onNavigate('receivables')}
-              className="text-slate-400 hover:text-emerald-700 transition"
+              className="text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition"
               title="View receivables"
             >
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="text-2xl font-bold font-mono-num text-amber-700 mt-2">
+          <div className="text-2xl sm:text-3xl font-extrabold font-mono-num text-amber-600 dark:text-amber-400 mt-2.5 tracking-tight">
             {formatCurrency(totalReceivables, company.currencySymbol)}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">
-            Across {debtorsCount} customer{debtorsCount !== 1 ? 's' : ''} ({formatCurrency(aging31to60 + aging61to90 + aging90plus, company.currencySymbol)} over 30 days)
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
+            Across {debtorsCount} customer{debtorsCount !== 1 ? 's' : ''} ({formatCurrency(aging31to60 + aging61to90 + aging90plus, company.currencySymbol)} overdue)
           </div>
         </div>
 
         {/* Invoices Issued Card */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs relative">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-5 sm:p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-md dark:hover:border-emerald-500/30 transition relative">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold">
             <span>Invoices issued</span>
             <button
               onClick={() => onNavigate('invoices')}
-              className="text-slate-400 hover:text-emerald-700 transition"
+              className="text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition"
               title="View all invoices"
             >
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="text-2xl font-bold font-mono-num text-slate-900 mt-2">
+          <div className="text-2xl sm:text-3xl font-extrabold font-mono-num text-slate-900 dark:text-white mt-2.5 tracking-tight">
             {activeInvoices.length} issued
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">
-            {cancelledCount} cancelled · 0 rounding drift
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
+            {cancelledCount} cancelled · 0.00 paise drift
           </div>
         </div>
       </div>
@@ -235,13 +240,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* Middle Row: Receivables Aging & Ask Your Books */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Receivables Aging Bar */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-sm text-slate-900">Receivables aging</h3>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Receivables aging</h3>
               <button
                 onClick={() => onNavigate('receivables')}
-                className="text-xs text-emerald-700 hover:underline font-medium"
+                className="text-xs text-emerald-700 dark:text-emerald-400 hover:underline font-semibold"
               >
                 Details
               </button>
@@ -249,60 +254,60 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             <div className="space-y-3.5">
               <div>
-                <div className="flex justify-between text-xs text-slate-600 mb-1">
+                <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 mb-1">
                   <span>0–30 days</span>
-                  <span className="font-mono-num font-medium text-slate-900">
+                  <span className="font-mono-num font-semibold text-slate-900 dark:text-slate-100">
                     {formatCurrency(aging0to30, company.currencySymbol)}
                   </span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
-                    className="bg-emerald-700 h-2 rounded-full"
+                    className="bg-emerald-600 dark:bg-emerald-500 h-2 rounded-full"
                     style={{ width: `${totalReceivables > 0 ? (aging0to30 / totalReceivables) * 100 : 0}%` }}
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex justify-between text-xs text-slate-600 mb-1">
+                <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 mb-1">
                   <span>31–60 days</span>
-                  <span className="font-mono-num font-medium text-slate-900">
+                  <span className="font-mono-num font-semibold text-slate-900 dark:text-slate-100">
                     {formatCurrency(aging31to60, company.currencySymbol)}
                   </span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
-                    className="bg-amber-600 h-2 rounded-full"
+                    className="bg-amber-500 h-2 rounded-full"
                     style={{ width: `${totalReceivables > 0 ? (aging31to60 / totalReceivables) * 100 : 0}%` }}
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex justify-between text-xs text-slate-600 mb-1">
+                <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 mb-1">
                   <span>61–90 days</span>
-                  <span className="font-mono-num font-medium text-slate-900">
+                  <span className="font-mono-num font-semibold text-slate-900 dark:text-slate-100">
                     {formatCurrency(aging61to90, company.currencySymbol)}
                   </span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
-                    className="bg-orange-600 h-2 rounded-full"
+                    className="bg-orange-500 h-2 rounded-full"
                     style={{ width: `${totalReceivables > 0 ? (aging61to90 / totalReceivables) * 100 : 0}%` }}
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex justify-between text-xs text-slate-600 mb-1">
+                <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 mb-1">
                   <span>90+ days</span>
-                  <span className="font-mono-num font-medium text-slate-900">
+                  <span className="font-mono-num font-semibold text-slate-900 dark:text-slate-100">
                     {formatCurrency(aging90plus, company.currencySymbol)}
                   </span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
-                    className="bg-red-700 h-2 rounded-full"
+                    className="bg-red-600 dark:bg-red-500 h-2 rounded-full"
                     style={{ width: `${totalReceivables > 0 ? (aging90plus / totalReceivables) * 100 : 0}%` }}
                   />
                 </div>
@@ -310,20 +315,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
           </div>
 
-          <div className="mt-5 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
+          <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
             Automated payment tracking based on bill dates & settlements
           </div>
         </div>
 
         {/* "Ask your books" NLP Assistant */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-sm text-slate-900 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-emerald-700" />
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Ask your books
               </h3>
-              <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+              <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
                 <Mic className="w-3.5 h-3.5" />
               </div>
             </div>
@@ -334,10 +339,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <button
                   key={chip}
                   onClick={() => handleChipClick(chip)}
-                  className={`text-xs px-3 py-1.5 rounded-full border transition font-medium ${
+                  className={`text-xs px-3 py-1.5 rounded-full border transition font-semibold ${
                     activeChip === chip
-                      ? 'bg-slate-900 text-white border-slate-900'
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                      ? 'bg-slate-900 dark:bg-emerald-700 text-white border-slate-900 dark:border-emerald-600 shadow-xs'
+                      : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                   }`}
                 >
                   {chip}
@@ -352,12 +357,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 placeholder="Ask e.g. 'How much GST is due?' or 'Which stock is low?'"
                 value={nlpQuery}
                 onChange={e => setNlpQuery(e.target.value)}
-                className="w-full pl-8 pr-16 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-700 bg-slate-50/50"
+                className="w-full pl-8 pr-16 py-2.5 text-xs border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600/30 bg-slate-50/70 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition"
               />
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-3" />
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3.5" />
               <button
                 type="submit"
-                className="absolute right-1.5 top-1.5 px-2.5 py-1 bg-emerald-800 hover:bg-emerald-900 text-white text-[11px] rounded font-medium"
+                className="absolute right-1.5 top-1.5 px-3 py-1.5 bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white text-[11px] rounded-lg font-semibold transition"
               >
                 Query
               </button>
@@ -365,10 +370,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             {/* Query Answer Output Box */}
             {nlpAnswer && (
-              <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-100 text-xs text-slate-700 space-y-2">
-                <p className="leading-relaxed">{nlpAnswer}</p>
-                <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-200/60">
-                  <span className="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-medium">
+              <div className="p-4 bg-emerald-50/60 dark:bg-emerald-950/30 rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 text-xs text-slate-700 dark:text-slate-200 space-y-2">
+                <p className="leading-relaxed font-medium">{nlpAnswer}</p>
+                <div className="flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-400 pt-1 border-t border-emerald-200/50 dark:border-emerald-800/50">
+                  <span className="bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">
                     Verified ledger
                   </span>
                   <span>Calculated from issued invoices · No estimates</span>
@@ -382,12 +387,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* Bottom Row: Recent Invoices & Low Stock */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Invoices Table (2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-            <h3 className="font-semibold text-sm text-slate-900">Recent invoices</h3>
+        <div className="lg:col-span-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <h3 className="font-bold text-sm text-slate-900 dark:text-white">Recent invoices</h3>
             <button
               onClick={() => onNavigate('invoices')}
-              className="text-xs text-emerald-700 hover:underline font-medium"
+              className="text-xs text-emerald-700 dark:text-emerald-400 hover:underline font-semibold"
             >
               View all ({invoices.length})
             </button>
@@ -395,54 +400,54 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 border-b border-slate-100 text-[11px]">
+              <thead className="bg-slate-50/90 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800 text-[11px] uppercase tracking-wider font-semibold">
                 <tr>
-                  <th className="py-2.5 px-4 font-medium">Invoice</th>
-                  <th className="py-2.5 px-4 font-medium">Customer</th>
-                  <th className="py-2.5 px-4 font-medium">Date</th>
-                  <th className="py-2.5 px-4 font-medium text-right">Taxable</th>
-                  <th className="py-2.5 px-4 font-medium text-right">Total</th>
-                  <th className="py-2.5 px-4 font-medium">Status</th>
+                  <th className="py-3 px-4">Invoice</th>
+                  <th className="py-3 px-4">Customer</th>
+                  <th className="py-3 px-4">Date</th>
+                  <th className="py-3 px-4 text-right">Taxable</th>
+                  <th className="py-3 px-4 text-right">Total</th>
+                  <th className="py-3 px-4">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
                 {invoices.slice(0, 5).map(inv => (
                   <tr
                     key={inv.id}
                     onClick={() => onSelectInvoice(inv)}
-                    className="hover:bg-slate-50/80 cursor-pointer transition"
+                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 cursor-pointer transition"
                   >
-                    <td className="py-3 px-4 font-mono font-medium text-emerald-800">
+                    <td className="py-3.5 px-4 font-mono font-bold text-emerald-700 dark:text-emerald-400">
                       {inv.invoiceNumber}
                     </td>
-                    <td className="py-3 px-4 text-slate-800 font-medium max-w-[160px] truncate">
+                    <td className="py-3.5 px-4 text-slate-800 dark:text-slate-200 font-semibold max-w-[160px] truncate">
                       {inv.customerName}
                     </td>
-                    <td className="py-3 px-4 text-slate-500">{inv.invoiceDate}</td>
-                    <td className="py-3 px-4 text-right font-mono-num text-slate-600">
+                    <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400">{inv.invoiceDate}</td>
+                    <td className="py-3.5 px-4 text-right font-mono-num text-slate-600 dark:text-slate-300 font-medium">
                       {formatCurrency(inv.subtotalTaxable, company.currencySymbol)}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono-num font-semibold text-slate-900">
+                    <td className="py-3.5 px-4 text-right font-mono-num font-bold text-slate-900 dark:text-white">
                       {formatCurrency(inv.grandTotal, company.currencySymbol)}
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-3.5 px-4">
                       {inv.status === 'PAID' && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-100 text-emerald-800">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                           Paid
                         </span>
                       )}
                       {inv.status === 'PART_PAID' && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-100 text-amber-800">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
                           Part paid
                         </span>
                       )}
                       {inv.status === 'UNPAID' && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-100 text-red-800">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 dark:bg-red-950/80 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800">
                           Unpaid
                         </span>
                       )}
                       {inv.status === 'CANCELLED' && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-200 text-slate-600 line-through">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 line-through">
                           Cancelled
                         </span>
                       )}
@@ -455,22 +460,22 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* Low Stock Watchlist (1 col) */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm p-6 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="font-semibold text-sm text-slate-900 flex items-center gap-1.5">
-                <AlertCircle className="w-4 h-4 text-amber-600" />
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
+                <AlertCircle className="w-4 h-4 text-amber-500" />
                 Low stock watchlist
               </h3>
               <button
                 onClick={() => onNavigate('inventory')}
-                className="text-xs text-emerald-700 hover:underline font-medium"
+                className="text-xs text-emerald-700 dark:text-emerald-400 hover:underline font-semibold"
               >
                 All items
               </button>
             </div>
 
-            <div className="divide-y divide-slate-100 mt-2">
+            <div className="divide-y divide-slate-100 dark:divide-slate-800/70 mt-2">
               {lowStockItems.length === 0 ? (
                 <div className="py-8 text-center text-xs text-slate-400">
                   All inventory items are well-stocked.
@@ -479,13 +484,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 lowStockItems.map(p => (
                   <div key={p.id} className="py-3 flex items-center justify-between">
                     <div className="overflow-hidden pr-2">
-                      <div className="font-medium text-xs text-slate-800 truncate">{p.name}</div>
-                      <div className="text-[11px] text-slate-400 font-mono">
+                      <div className="font-semibold text-xs text-slate-800 dark:text-slate-200 truncate">{p.name}</div>
+                      <div className="text-[11px] text-slate-400 dark:text-slate-500 font-mono mt-0.5">
                         HSN {p.hsnSacCode} · SKU {p.sku}
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <span className="text-xs font-bold text-amber-700 font-mono">
+                      <span className="text-xs font-bold text-amber-700 dark:text-amber-400 font-mono">
                         {p.currentStock} {p.uom} left
                       </span>
                       <div className="text-[10px] text-slate-400">
@@ -498,10 +503,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
             <button
               onClick={() => downloadGstr1JsonFile(company, invoices)}
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-lg text-xs font-semibold border border-emerald-200 transition"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-3 bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded-xl text-xs font-semibold border border-emerald-200 dark:border-emerald-800 transition shadow-2xs"
             >
               <FileSpreadsheet className="w-4 h-4" />
               Export GSTR-1 JSON
@@ -512,36 +517,36 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
       {/* Audit Modal ("How is this calculated?") */}
       {calcModal && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-6 border border-slate-200 animate-in fade-in zoom-in-95">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-emerald-700" />
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                 {calcModal === 'sales' ? 'How is Sales Calculated?' : 'How is GST Liability Calculated?'}
               </h3>
               <button
                 onClick={() => setCalcModal(null)}
-                className="text-slate-400 hover:text-slate-700"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="py-4 text-xs text-slate-600 space-y-3">
+            <div className="py-4 text-xs text-slate-600 dark:text-slate-300 space-y-3">
               {calcModal === 'sales' ? (
                 <>
                   <p>
                     <strong>Formula:</strong> <code>Total Sales = ∑ (Active Invoice Grand Totals) - ∑ (Credit Notes)</code>
                   </p>
-                  <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1 font-mono text-[11px]">
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1 font-mono text-[11px]">
                     <div>Total Active Bills: {activeInvoices.length}</div>
                     <div>Sum of Taxable Value: {formatCurrency(totalTaxable, company.currencySymbol)}</div>
                     <div>Sum of GST Taxes: {formatCurrency(totalTax, company.currencySymbol)}</div>
-                    <div className="font-bold pt-1 border-t border-slate-200 text-slate-900">
+                    <div className="font-bold pt-1 border-t border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
                       Gross Revenue: {formatCurrency(totalSales, company.currencySymbol)}
                     </div>
                   </div>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     Cancelled invoices and draft bills are strictly excluded to maintain strict ledger integrity.
                   </p>
                 </>
@@ -558,11 +563,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       <strong>Inter-State:</strong> Place of Supply ≠ Seller State → IGST (100%)
                     </li>
                   </ul>
-                  <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1 font-mono text-[11px]">
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1 font-mono text-[11px]">
                     <div>CGST (Central Tax): {formatCurrency(totalCgst, company.currencySymbol)}</div>
                     <div>SGST (State Tax): {formatCurrency(totalSgst, company.currencySymbol)}</div>
                     <div>IGST (Integrated Tax): {formatCurrency(totalIgst, company.currencySymbol)}</div>
-                    <div className="font-bold pt-1 border-t border-slate-200 text-slate-900">
+                    <div className="font-bold pt-1 border-t border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
                       Total Output Tax: {formatCurrency(totalTax, company.currencySymbol)}
                     </div>
                   </div>
@@ -570,10 +575,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               )}
             </div>
 
-            <div className="flex justify-end pt-3 border-t border-slate-100">
+            <div className="flex justify-end pt-3 border-t border-slate-100 dark:border-slate-800">
               <button
                 onClick={() => setCalcModal(null)}
-                className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800"
+                className="px-4 py-2 bg-slate-900 dark:bg-emerald-700 text-white rounded-xl text-xs font-semibold hover:bg-slate-800 dark:hover:bg-emerald-600 transition"
               >
                 Close
               </button>

@@ -96,21 +96,25 @@ export function App() {
           {/* Main Content Area */}
           <div className="flex-1 flex flex-col h-screen overflow-hidden">
             {/* Top Responsive Mobile Header */}
-            <header className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between z-30 shrink-0">
-              <div className="flex items-center gap-3">
+            <header className="lg:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex items-center justify-between z-30 shrink-0">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsMobileMenuOpen(true)}
-                  className="p-2 -ml-1 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
+                  className="p-1.5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
                   title="Open navigation menu"
                 >
                   <Menu className="w-5 h-5" />
                 </button>
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-800 text-white font-bold text-xs flex items-center justify-center">
-                    PM
-                  </div>
-                  <span className="font-bold text-sm text-slate-900 dark:text-white tracking-tight">PayzenMax</span>
-                </div>
+                
+                {/* Mobile Home Return Button */}
+                <button
+                  onClick={() => setCurrentView('landing')}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/80 dark:border-emerald-800/60 hover:bg-emerald-100 transition group shadow-2xs"
+                  title="Return to Home Landing Page"
+                >
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold group-hover:-translate-x-0.5 transition-transform">←</span>
+                  <span className="flex items-center gap-1 font-bold">Home</span>
+                </button>
               </div>
 
               <div className="flex items-center gap-2">
@@ -120,10 +124,55 @@ export function App() {
                     setSelectedInvoice(null);
                     setCurrentView('new_bill');
                   }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-800 text-white text-xs font-semibold rounded-lg shadow-xs"
+                  className="flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-xs font-semibold rounded-lg shadow-xs active:scale-95 transition"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>New bill</span>
+                </button>
+              </div>
+            </header>
+
+            {/* Desktop Top Workspace Utility Bar */}
+            <header className="hidden lg:flex items-center justify-between px-6 py-2.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 z-20 shrink-0">
+              {/* Left: Home Return Button & Breadcrumbs */}
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => setCurrentView('landing')}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800/70 border border-slate-200/90 dark:border-slate-700/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:border-emerald-300 dark:hover:border-emerald-700/80 hover:text-emerald-700 dark:hover:text-emerald-300 transition group shadow-2xs"
+                  title="Return to PayzenMax Landing Page"
+                >
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm group-hover:-translate-x-1 transition-transform">←</span>
+                  <span className="font-bold">Back to Home</span>
+                </button>
+
+                <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 font-medium">
+                  <span>PayzenMax</span>
+                  <span>/</span>
+                  <span className="text-slate-700 dark:text-slate-200 font-semibold capitalize">
+                    {currentView.replace('_', ' ')}
+                  </span>
+                </div>
+              </div>
+
+              {/* Right: Offline Indicator & Fast Actions */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/60 shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>100% Offline Ready</span>
+                </div>
+
+                <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
+
+                <button
+                  onClick={() => {
+                    setSelectedInvoice(null);
+                    setCurrentView('new_bill');
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white text-xs font-semibold rounded-lg shadow-xs hover:shadow-sm transition active:scale-95"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>New bill</span>
+                  <kbd className="text-[10px] bg-emerald-950/50 text-emerald-100 px-1 py-0.2 rounded font-mono ml-0.5">Alt+N</kbd>
                 </button>
               </div>
             </header>

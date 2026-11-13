@@ -59,21 +59,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div className="pb-4 border-b border-slate-200">
-        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Business Settings & Portability</h2>
-        <p className="text-xs text-slate-500 mt-0.5">
+      <div className="pb-4 border-b border-slate-200/80 dark:border-slate-800">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Business Settings & Portability</h2>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
           Configure business profile, banking details, universal tax system, and local backups
         </p>
       </div>
 
       {savedSuccess && (
-        <div className="p-3 bg-emerald-100 text-emerald-900 border border-emerald-300 rounded-lg text-xs font-semibold">
+        <div className="p-3.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 rounded-xl text-xs font-semibold">
           Settings updated successfully! All future invoices will use this configuration.
         </div>
       )}
 
       {importStatus && (
-        <div className="p-3 bg-blue-100 text-blue-900 border border-blue-300 rounded-lg text-xs font-semibold">
+        <div className="p-3.5 bg-blue-100 dark:bg-blue-950/80 text-blue-900 dark:text-blue-200 border border-blue-300 dark:border-blue-700 rounded-xl text-xs font-semibold">
           {importStatus}
         </div>
       )}
@@ -81,36 +81,36 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {/* Main Settings Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Business Identity Card */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-            <Building2 className="w-4 h-4 text-emerald-700" />
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <Building2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             Business Identity & Tax Jurisdiction
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-700">Legal Name (As on Certificate) *</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Legal Name (As on Certificate) *</label>
               <input
                 type="text"
                 required
                 value={form.legalName}
                 onChange={e => setForm({ ...form, legalName: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-600"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Trade / Display Name</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Trade / Display Name</label>
               <input
                 type="text"
                 value={form.tradeName}
                 onChange={e => setForm({ ...form, tradeName: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-600"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Tax System Mode</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Tax System Mode</label>
               <select
                 value={form.taxSystem}
                 onChange={e => {
@@ -121,7 +121,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     taxNumberLabel: sys === 'GST_INDIA' ? 'GSTIN' : sys === 'VAT' ? 'VAT ID' : 'Tax ID',
                   });
                 }}
-                className="w-full mt-1 px-2.5 py-2 text-xs border border-slate-300 rounded-lg bg-white font-medium"
+                className="w-full mt-1 px-2.5 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-medium"
               >
                 <option value="GST_INDIA">India GST (CBIC Rule 46 CGST/SGST/IGST)</option>
                 <option value="VAT">International Value Added Tax (VAT)</option>
@@ -131,18 +131,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">{form.taxNumberLabel} *</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{form.taxNumberLabel} *</label>
               <input
                 type="text"
                 required
                 value={form.taxNumber}
                 onChange={e => setForm({ ...form, taxNumber: e.target.value.toUpperCase() })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono font-bold border border-slate-300 rounded-lg focus:outline-none"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Registered State & Code</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Registered State & Code</label>
               <select
                 value={form.stateCode}
                 onChange={e => {
@@ -151,7 +151,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     setForm({ ...form, stateCode: st.code, state: st.name });
                   }
                 }}
-                className="w-full mt-1 px-2.5 py-2 text-xs border border-slate-300 rounded-lg bg-white"
+                className="w-full mt-1 px-2.5 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               >
                 {INDIAN_STATES.map(s => (
                   <option key={s.code} value={s.code}>{s.code} - {s.name}</option>
@@ -160,143 +160,143 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Currency Symbol</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Currency Symbol</label>
               <input
                 type="text"
                 value={form.currencySymbol}
                 onChange={e => setForm({ ...form, currencySymbol: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="text-xs font-semibold text-slate-700">Registered Business Address</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Registered Business Address</label>
               <input
                 type="text"
                 value={form.addressLine1}
                 onChange={e => setForm({ ...form, addressLine1: e.target.value })}
                 placeholder="Unit, Floor, Building..."
-                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">City</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">City</label>
               <input
                 type="text"
                 value={form.city}
                 onChange={e => setForm({ ...form, city: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Pincode / Postal Code</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Pincode / Postal Code</label>
               <input
                 type="text"
                 value={form.pincode}
                 onChange={e => setForm({ ...form, pincode: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
           </div>
         </div>
 
         {/* Banking & UPI Settlement Card */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-            <CreditCard className="w-4 h-4 text-emerald-700" />
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <CreditCard className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             Bank Settlement & Dynamic UPI QR
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-700">Bank Name</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Bank Name</label>
               <input
                 type="text"
                 value={form.bankName}
                 onChange={e => setForm({ ...form, bankName: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Bank Account Number</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Bank Account Number</label>
               <input
                 type="text"
                 value={form.bankAccount}
                 onChange={e => setForm({ ...form, bankAccount: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">IFSC Code / Routing</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">IFSC Code / Routing</label>
               <input
                 type="text"
                 value={form.bankIfsc}
                 onChange={e => setForm({ ...form, bankIfsc: e.target.value.toUpperCase() })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">UPI ID / VPA (For Dynamic QR)</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">UPI ID / VPA (For Dynamic QR)</label>
               <input
                 type="text"
                 placeholder="company@bank"
                 value={form.upiId}
                 onChange={e => setForm({ ...form, upiId: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
           </div>
         </div>
 
         {/* Invoice Sequence & Terms */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="font-bold text-sm text-slate-900 pb-2 border-b border-slate-100">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="font-bold text-sm text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-slate-800">
             Invoice Numbering & Legal Terms
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-700">Invoice Prefix Series</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Invoice Prefix Series</label>
               <input
                 type="text"
                 value={form.invoicePrefix}
                 onChange={e => setForm({ ...form, invoicePrefix: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Next Invoice Serial Number</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Next Invoice Serial Number</label>
               <input
                 type="number"
                 value={form.nextInvoiceNumber}
                 onChange={e => setForm({ ...form, nextInvoiceNumber: Number(e.target.value) || 1 })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono font-bold border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700">Financial Year</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Financial Year</label>
               <input
                 type="text"
                 value={form.financialYear}
                 onChange={e => setForm({ ...form, financialYear: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs font-mono border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
 
             <div className="sm:col-span-3">
-              <label className="text-xs font-semibold text-slate-700">Terms & Conditions Disclaimer</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Terms & Conditions Disclaimer</label>
               <textarea
                 rows={3}
                 value={form.termsAndConditions}
                 onChange={e => setForm({ ...form, termsAndConditions: e.target.value })}
-                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 rounded-lg"
+                className="w-full mt-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
               />
             </div>
           </div>
@@ -305,7 +305,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-semibold flex items-center gap-2 shadow-xs transition"
+            className="px-6 py-2.5 bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-md hover:shadow-lg dark:shadow-emerald-950/50 transition border border-emerald-600/30"
           >
             <Save className="w-4 h-4" />
             Save configuration
@@ -314,12 +314,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </form>
 
       {/* Zero Lock-in Data Portability */}
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-        <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-          <ShieldCheck className="w-4 h-4 text-emerald-700" />
+      <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+        <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+          <ShieldCheck className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
           Zero-Lock-in Data Portability & Backup
         </h3>
-        <p className="text-xs text-slate-600">
+        <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
           All your invoices, customers, and inventory reside entirely inside your browser's private local storage. No server accounts, subscriptions, or remote lock-in.
         </p>
 
@@ -327,13 +327,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <button
             type="button"
             onClick={onExportBackup}
-            className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-semibold flex items-center gap-2 border border-slate-300 transition"
+            className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-2 border border-slate-300 dark:border-slate-700 transition"
           >
             <Download className="w-4 h-4" />
             Download Full JSON Backup
           </button>
 
-          <label className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-semibold flex items-center gap-2 border border-slate-300 cursor-pointer transition">
+          <label className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-2 border border-slate-300 dark:border-slate-700 cursor-pointer transition">
             <Upload className="w-4 h-4" />
             <span>Restore from JSON File</span>
             <input
@@ -351,7 +351,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 onResetDemo();
               }
             }}
-            className="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-semibold flex items-center gap-2 border border-red-200 transition"
+            className="px-4 py-2 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/60 text-red-700 dark:text-red-300 rounded-xl text-xs font-semibold flex items-center gap-2 border border-red-200 dark:border-red-800 transition"
           >
             <RotateCcw className="w-4 h-4" />
             Reset to Sample Demo
