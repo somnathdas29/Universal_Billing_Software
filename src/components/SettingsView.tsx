@@ -57,7 +57,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto space-y-6">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto space-y-6">
       {/* Header */}
       <div className="pb-4 border-b border-slate-200">
         <h2 className="text-xl font-bold text-slate-900 tracking-tight">Business Settings & Portability</h2>

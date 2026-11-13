@@ -21,6 +21,7 @@ import {
   Check,
   Copy
 } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 interface LandingPageProps {
   onStartBilling: () => void;
@@ -88,41 +89,44 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f7f6f2] text-slate-900 selection:bg-emerald-100 selection:text-emerald-900 font-sans overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#f7f6f2] dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-emerald-100 selection:text-emerald-900 font-sans overflow-x-hidden relative transition-colors duration-200">
       {/* Dynamic Ambient Background Blur Lights */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200/40 rounded-full blur-3xl pointer-events-none animate-mesh-1 -z-10" />
-      <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-amber-100/40 rounded-full blur-3xl pointer-events-none animate-mesh-2 -z-10" />
-      <div className="absolute top-2/3 left-1/3 w-80 h-80 bg-emerald-100/50 rounded-full blur-3xl pointer-events-none animate-mesh-1 -z-10" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200/40 dark:bg-emerald-600/20 rounded-full blur-3xl pointer-events-none animate-mesh-1 -z-10" />
+      <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-amber-100/40 dark:bg-emerald-800/15 rounded-full blur-3xl pointer-events-none animate-mesh-2 -z-10" />
+      <div className="absolute top-2/3 left-1/3 w-80 h-80 bg-emerald-100/50 dark:bg-teal-700/20 rounded-full blur-3xl pointer-events-none animate-mesh-1 -z-10" />
 
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-[#f7f6f2]/85 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300">
+      <header className="sticky top-0 z-40 bg-[#f7f6f2]/85 dark:bg-slate-950/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-all duration-300">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-700 to-emerald-900 flex items-center justify-center text-white font-bold text-sm tracking-wider shadow-sm hover:scale-105 hover:rotate-3 transition-transform duration-200 cursor-pointer">
               PM
             </div>
             <div>
-              <span className="font-bold text-base tracking-tight text-slate-900">PayzenMax.com</span>
-              <span className="hidden sm:inline-block ml-2 text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-100/80 text-emerald-800 font-medium border border-emerald-200">
+              <span className="font-bold text-base tracking-tight text-slate-900 dark:text-white">PayzenMax.com</span>
+              <span className="hidden sm:inline-block ml-2 text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-100/80 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-medium border border-emerald-200 dark:border-emerald-800">
                 Offline-First GST
               </span>
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold text-slate-600">
-            <a href="#features" className="hover:text-emerald-800 hover:-translate-y-0.5 transition duration-150">Features</a>
-            <a href="#calculator" className="hover:text-emerald-800 hover:-translate-y-0.5 transition duration-150">POS Engine</a>
-            <a href="#mobile" className="hover:text-emerald-800 hover:-translate-y-0.5 transition duration-150">Mobile</a>
-            <a href="#stories" className="hover:text-emerald-800 hover:-translate-y-0.5 transition duration-150">Stories</a>
+          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold text-slate-600 dark:text-slate-300">
+            <a href="#features" className="hover:text-emerald-800 dark:hover:text-emerald-400 hover:-translate-y-0.5 transition duration-150">Features</a>
+            <a href="#calculator" className="hover:text-emerald-800 dark:hover:text-emerald-400 hover:-translate-y-0.5 transition duration-150">POS Engine</a>
+            <a href="#mobile" className="hover:text-emerald-800 dark:hover:text-emerald-400 hover:-translate-y-0.5 transition duration-150">Mobile</a>
+            <a href="#stories" className="hover:text-emerald-800 dark:hover:text-emerald-400 hover:-translate-y-0.5 transition duration-150">Stories</a>
           </nav>
 
-          <button
-            onClick={onStartBilling}
-            className="flex items-center gap-2 px-4 py-2 shimmer-button text-white rounded-lg text-xs font-bold shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
-          >
-            <span>Start billing — no login</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <button
+              onClick={onStartBilling}
+              className="flex items-center gap-2 px-4 py-2 shimmer-button text-white rounded-lg text-xs font-bold shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
+            >
+              <span>Start billing — no login</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -140,9 +144,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
           <span>No cloud downtime · No missing invoices · Exact to 0.00 paise</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.08]">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08]">
           GST billing that keeps <br className="hidden sm:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-900 relative inline-block">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-900 dark:from-emerald-400 dark:via-emerald-300 dark:to-teal-400 relative inline-block">
             your books honest.
             <svg className="absolute -bottom-2 left-0 w-full text-emerald-500/30 -z-10" viewBox="0 0 250 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 9C50 3 150 2 247 9" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
@@ -150,7 +154,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
           </span>
         </h1>
 
-        <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+        <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
           Rule 46 compliant invoices generated in under 8 seconds. Runs completely in your browser — zero setup, works offline, and files directly to GSTR-1.
         </p>
 
@@ -354,74 +358,74 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartBilling }) => {
       </section>
 
       {/* 6 Core Features Section */}
-      <section id="features" className="py-20 bg-white border-y border-slate-200 px-6">
+      <section id="features" className="py-20 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800 px-6 transition-colors duration-200">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">
               Six Core Pillars
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
               Designed from the ground up for Indian business realities
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl border border-slate-200 bg-[#fbfbfa] space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 transition-all duration-200 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#fbfbfa] dark:bg-slate-800/60 space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-200 group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
                 <Keyboard className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-slate-900">01. Counter billing for speed</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Global shortcut <kbd className="font-mono bg-slate-200 px-1 rounded text-[10px]">Alt+N</kbd>, rapid SKU search, quick-add customers on the fly, and sub-8-second invoice generation.
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">01. Counter billing for speed</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Global shortcut <kbd className="font-mono bg-slate-200 dark:bg-slate-700 px-1 rounded text-[10px]">Alt+N</kbd>, rapid SKU search, quick-add customers on the fly, and sub-8-second invoice generation.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-[#fbfbfa] space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 transition-all duration-200 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#fbfbfa] dark:bg-slate-800/60 space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-200 group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
                 <Calculator className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-slate-900">02. Un-miscalculating GST engine</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">02. Un-miscalculating GST engine</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Automatic Place of Supply (POS) detection: instantly routes into CGST + SGST (intra-state) or IGST (inter-state) with 0.00 paise rounding drift.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-[#fbfbfa] space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 transition-all duration-200 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#fbfbfa] dark:bg-slate-800/60 space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-200 group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
                 <QrCode className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-slate-900">03. Rule 46 invoices with UPI QR</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">03. Rule 46 invoices with UPI QR</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Original, Duplicate, and Triplicate copies. Dynamic UPI QR payment link generated for instant checkout with PhonePe, GPay, or Paytm.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-[#fbfbfa] space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 transition-all duration-200 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#fbfbfa] dark:bg-slate-800/60 space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-200 group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
                 <Sparkles className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-slate-900">04. Self-explaining reports</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">04. Self-explaining reports</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Transparent "How is this calculated?" drawers for revenue and tax liability. Natural language "Ask your books" assistant.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-[#fbfbfa] space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 transition-all duration-200 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#fbfbfa] dark:bg-slate-800/60 space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-200 group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
                 <Database className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-slate-900">05. Zero-lockin portability</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">05. Zero-lockin portability</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 All data is stored inside your browser. Download complete JSON backups or restore anytime with one click. No vendor lock-in.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-[#fbfbfa] space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 transition-all duration-200 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#fbfbfa] dark:bg-slate-800/60 space-y-3 hover:-translate-y-1.5 hover:shadow-xl hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-200 group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-emerald-800 group-hover:text-white transition duration-200">
                 <FileSpreadsheet className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-slate-900">06. GSTR-1 ready on the 1st</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">06. GSTR-1 ready on the 1st</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Auto-classifies into Table 4 (B2B), Table 7 (B2C Small), and Table 12 (HSN summary). Download JSON for direct upload on gst.gov.in.
               </p>
             </div>

@@ -32,7 +32,7 @@ export const Gstr1ReportView: React.FC<Gstr1ReportViewProps> = ({ company, invoi
   const totalB2csTax = b2csInvoices.reduce((sum, i) => sum + i.totalTax, 0);
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-6">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>

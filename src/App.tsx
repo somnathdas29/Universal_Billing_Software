@@ -13,7 +13,9 @@ import { ReceivablesAgingView } from './components/ReceivablesAgingView';
 import { CreditNotesView } from './components/CreditNotesView';
 import { GstToolsView } from './components/GstToolsView';
 import { LandingPage } from './components/LandingPage';
+import { ThemeToggle } from './components/ThemeToggle';
 import { Invoice, Customer } from './types';
+import { Menu, Plus } from 'lucide-react';
 
 export function App() {
   const {
@@ -37,6 +39,7 @@ export function App() {
 
   const [currentView, setCurrentView] = useState<NavView>('landing');
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Global keyboard shortcut: Alt+N for New Bill
   useEffect(() => {
@@ -68,7 +71,7 @@ export function App() {
   };
 
   return (
-    <div className="flex h-screen bg-[#f7f6f2] overflow-hidden text-slate-900">
+    <div className="flex h-screen bg-[#f7f6f2] dark:bg-slate-950 overflow-hidden text-slate-900 dark:text-slate-100 transition-colors duration-200">
       {/* If Landing Page view is active, render full-screen Landing Page */}
       {currentView === 'landing' ? (
         <div className="w-full h-screen overflow-y-auto">
@@ -86,10 +89,46 @@ export function App() {
             company={company}
             invoices={invoices}
             products={products}
+            isOpenMobile={isMobileMenuOpen}
+            onCloseMobile={() => setIsMobileMenuOpen(false)}
           />
 
           {/* Main Content Area */}
-          <main className="flex-1 overflow-y-auto">
+          <div className="flex-1 flex flex-col h-screen overflow-hidden">
+            {/* Top Responsive Mobile Header */}
+            <header className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between z-30 shrink-0">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsMobileMenuOpen(true)}
+                  className="p-2 -ml-1 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
+                  title="Open navigation menu"
+                >
+                  <Menu className="w-5 h-5" />
+                </button>
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-emerald-800 text-white font-bold text-xs flex items-center justify-center">
+                    PM
+                  </div>
+                  <span className="font-bold text-sm text-slate-900 dark:text-white tracking-tight">PayzenMax</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <ThemeToggle className="scale-90" />
+                <button
+                  onClick={() => {
+                    setSelectedInvoice(null);
+                    setCurrentView('new_bill');
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-800 text-white text-xs font-semibold rounded-lg shadow-xs"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>New bill</span>
+                </button>
+              </div>
+            </header>
+
+            <main className="flex-1 overflow-y-auto">
             {currentView === 'dashboard' && (
               <DashboardView
                 company={company}
@@ -193,7 +232,8 @@ export function App() {
               />
             )}
           </main>
-        </>
+        </div>
+      </>
       )}
 
       {/* Invoice Detail & CBIC Rule 46 Print Modal */}

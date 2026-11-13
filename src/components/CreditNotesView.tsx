@@ -24,7 +24,7 @@ export const CreditNotesView: React.FC<CreditNotesViewProps> = ({ creditNotes, c
   );
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-6">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
       <div className="pb-4 border-b border-slate-200">
         <h2 className="text-xl font-bold text-slate-900 tracking-tight">Credit Notes & Adjustments</h2>
         <p className="text-xs text-slate-500 mt-0.5">
