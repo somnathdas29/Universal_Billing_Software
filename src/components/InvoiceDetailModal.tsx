@@ -216,7 +216,7 @@ export const InvoiceDetailModal: React.FC<InvoiceDetailModalProps> = ({
                     <ShieldCheck className="w-3 h-3 text-emerald-700" />
                     CBIC Rule 46 Tax Invoice
                   </div>
-                  <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
+                  <h1 className="text-xl sm:text-2xl font-black tracking-tight !text-slate-900">
                     {company.legalName}
                   </h1>
                   {company.tradeName && (

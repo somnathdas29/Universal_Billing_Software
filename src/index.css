@@ -46,6 +46,40 @@
     color: #94a3b8;
   }
 
+  /* Printable Invoice sheet always retains crisp high-contrast print typography */
+  #printable-invoice,
+  #printable-invoice * {
+    color-scheme: light !important;
+  }
+
+  .dark #printable-invoice {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  .dark #printable-invoice h1,
+  .dark #printable-invoice h2,
+  .dark #printable-invoice h3,
+  .dark #printable-invoice h4,
+  .dark #printable-invoice h5,
+  .dark #printable-invoice h6 {
+    color: #0f172a !important;
+  }
+
+  .dark #printable-invoice p,
+  .dark #printable-invoice label {
+    color: #475569 !important;
+  }
+
+  .dark #printable-invoice th {
+    color: #334155 !important;
+    background-color: #f1f5f9 !important;
+  }
+
+  .dark #printable-invoice td {
+    color: #0f172a !important;
+  }
+
   /* Smooth transitions between light and dark */
   body, header, aside, main, div, button, input, select, textarea {
     transition-property: background-color, border-color, color;
