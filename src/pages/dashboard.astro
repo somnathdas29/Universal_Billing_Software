@@ -1,0 +1,8 @@
+---
+import AppLayout from '../layouts/AppLayout.astro';
+import DashboardIsland from '../components/islands/DashboardIsland';
+---
+
+<AppLayout title="Overview & Financial Ledger · PayzenMax" activeRoute="dashboard">
+  <DashboardIsland client:only="react" />
+</AppLayout>

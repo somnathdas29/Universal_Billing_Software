@@ -1,0 +1,69 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../index.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "PayzenMax Universal — Offline-First Universal Billing & GST Platform", 
+  description = "Ultra-fast, 100% offline-ready universal billing and CBIC Rule 46 GST suite. Zero cloud latency, deterministic 0.00 paise tax rounding, and instant GSTR-1 export."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+
+    <!-- Zero-Flash Dark Mode Initialization -->
+    <script is:inline>
+      function applyTheme() {
+        const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('payzen_theme') : null;
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = stored === 'dark' || (!stored && prefersDark);
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+    </script>
+  </head>
+  <body class="bg-[#f8fafc] dark:bg-[#070b13] text-slate-900 dark:text-slate-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-700 dark:selection:text-emerald-300 min-h-screen overflow-x-hidden">
+    <!-- Ambient Fluid Mesh Gradient (Animated Atmosphere) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40 dark:opacity-25" aria-hidden="true">
+      <div class="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-emerald-400/20 to-teal-500/0 blur-3xl animate-[meshGradient_22s_ease-in-out_infinite_alternate]"></div>
+      <div class="absolute top-[40%] -right-[15%] w-[45vw] h-[45vw] rounded-full bg-gradient-to-bl from-teal-400/15 via-emerald-600/10 to-transparent blur-3xl animate-[meshGradient_28s_ease-in-out_infinite_alternate-reverse]"></div>
+    </div>
+
+    <div class="relative z-10 flex flex-col min-h-screen">
+      <slot />
+    </div>
+
+    <!-- Global Offline Listener & Alt+N Keyboard Shortcut -->
+    <script is:inline>
+      document.addEventListener('keydown', (e) => {
+        if (e.altKey && (e.key === 'n' || e.key === 'N')) {
+          e.preventDefault();
+          window.location.href = '/new-bill';
+        }
+      });
+    </script>
+  </body>
+</html>

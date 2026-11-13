@@ -1,0 +1,8 @@
+---
+import AppLayout from '../layouts/AppLayout.astro';
+import InvoicesIsland from '../components/islands/InvoicesIsland';
+---
+
+<AppLayout title="Tax Invoices Register · PayzenMax" activeRoute="invoices">
+  <InvoicesIsland client:only="react" />
+</AppLayout>

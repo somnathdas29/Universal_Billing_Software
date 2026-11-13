@@ -1,0 +1,8 @@
+---
+import AppLayout from '../layouts/AppLayout.astro';
+import CustomersIsland from '../components/islands/CustomersIsland';
+---
+
+<AppLayout title="Customer Directory & B2B GSTINs · PayzenMax" activeRoute="customers">
+  <CustomersIsland client:only="react" />
+</AppLayout>

@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { LandingPage } from '../components/LandingPage';
+---
+
+<Layout title="PayzenMax — Offline-First Universal Billing & CBIC GST Suite">
+  <LandingPage client:load onStartBilling={() => { window.location.href = '/dashboard'; }} />
+</Layout>
